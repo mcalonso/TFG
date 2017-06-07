@@ -1,4 +1,6 @@
 #include "SplashScene.h"
+#include "MainMenuScene.h"
+#include "Definitions.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
@@ -31,9 +33,23 @@ bool SplashScene::init()
         return false;
     }
     
-    auto rootNode = CSLoader::createNode("MainScene.csb");
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    addChild(rootNode);
+	this->scheduleOnce(schedule_selector(SplashScene::openMainMenu), DISPLAY_TIME_SPLASH_SCENE);
+
+	auto backgroundSprite = Sprite::create("SplashScene.png");
+	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+
+	this->addChild(backgroundSprite);
 
     return true;
 }
+
+void SplashScene::openMainMenu(float dt) {
+
+	auto scene = MainMenuScene::createScene();
+
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+}
+

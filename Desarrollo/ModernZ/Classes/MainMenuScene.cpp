@@ -1,4 +1,6 @@
 #include "MainMenuScene.h"
+#include "GameScene.h"
+#include "Definitions.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
@@ -31,9 +33,16 @@ bool MainMenuScene::init()
         return false;
     }
     
-    auto rootNode = CSLoader::createNode("MainScene.csb");
+    //auto rootNode = CSLoader::createNode("MainScene.csb");
+    //addChild(rootNode);
 
-    addChild(rootNode);
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    return true;
+	auto backgroundSprite = Sprite::create("backgroundMenu.jpg");
+	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+
+	this->addChild(backgroundSprite);
+
+	return true;
 }
