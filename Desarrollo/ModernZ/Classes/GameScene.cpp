@@ -30,10 +30,13 @@ bool GameScene::init()
     {
         return false;
     }
-    
-    auto rootNode = CSLoader::createNode("MainScene.csb");
 
-    addChild(rootNode);
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	TMXTiledMap *backgoundMap = TMXTiledMap::create("maps/map1.tmx");
+	this->addChild(backgoundMap);
+
 
     return true;
 }

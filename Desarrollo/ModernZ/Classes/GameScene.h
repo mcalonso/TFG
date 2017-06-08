@@ -14,6 +14,9 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
+
+private: 
+	//MapGame *map;
 };
 
 #endif // __GAME_SCENE_H__

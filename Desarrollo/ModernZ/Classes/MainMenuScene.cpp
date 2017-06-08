@@ -41,8 +41,20 @@ bool MainMenuScene::init()
 
 	auto backgroundSprite = Sprite::create("backgroundMenu.jpg");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
 	this->addChild(backgroundSprite);
 
+	MenuItemImage *buttonPlay = MenuItemImage::create("menu/play.png", "menu/playSelec.png", CC_CALLBACK_1(MainMenuScene::playGameScene, this));
+
+	Menu* mainMenu = Menu::create(buttonPlay, NULL);
+	mainMenu->alignItemsVertically();
+	this->addChild(mainMenu);
+
 	return true;
+}
+
+void MainMenuScene::playGameScene(cocos2d::Ref *sender) {
+	
+	auto scene = GameScene::createScene();
+
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }

@@ -14,6 +14,9 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenuScene);
+
+	void playGameScene(cocos2d::Ref *sender);
+
 };
 
 #endif // __MAINMENU_SCENE_H__
