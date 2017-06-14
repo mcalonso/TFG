@@ -2,6 +2,7 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "Map.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -16,7 +17,10 @@ public:
     CREATE_FUNC(GameScene);
 
 private: 
-	//MapGame *map;
+	MapGame *map;
+	cocos2d::PhysicsWorld *sceneWorld;
+
+	void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
 };
 
 #endif // __GAME_SCENE_H__

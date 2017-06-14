@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="128" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="360">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="128" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="367">
  <tileset firstgid="1" name="tilemap6" tilewidth="16" tileheight="16" tilecount="624" columns="16">
   <image source="tileset.png" width="256" height="631"/>
   <tile id="226">
@@ -8720,34 +8720,34 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
+   <tile gid="93"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -9612,4 +9612,10 @@
    <tile gid="93"/>
   </data>
  </layer>
+ <objectgroup name="colisiones">
+  <object id="360" x="2" y="1182" width="2048" height="16"/>
+  <object id="361" x="96" y="1088" width="32" height="16"/>
+  <object id="364" x="224" y="1088" width="96" height="16"/>
+  <object id="365" x="416" y="1088" width="128" height="16"/>
+ </objectgroup>
 </map>

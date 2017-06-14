@@ -8,11 +8,16 @@ using namespace cocostudio::timeline;
 
 Scene* GameScene::createScene()
 {
-    // 'scene' is an autorelease object
-    auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
-    auto layer = GameScene::create();
+	// 'scene' is an autorelease object
+	auto scene = Scene::createWithPhysics();
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
+	// 'layer' is an autorelease object
+	auto layer = GameScene::create();
+	layer->SetPhysicsWorld(scene->getPhysicsWorld());
+
+	// add layer as a child to scene
+	scene->addChild(layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -34,9 +39,7 @@ bool GameScene::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	TMXTiledMap *backgoundMap = TMXTiledMap::create("maps/map1.tmx");
-	this->addChild(backgoundMap);
-
+	map = new MapGame(this);
 
     return true;
 }
