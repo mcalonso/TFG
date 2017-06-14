@@ -33,14 +33,14 @@ MapGame::MapGame(cocos2d::Layer *layer) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidos: %f %f %f %f", x, y, tamh, tamw);
+		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
 
-		auto physicsBody = PhysicsBody::createBox(Size(16, 16),
+		auto physicsBody = PhysicsBody::createBox(Size(tamw, tamh),
 			PhysicsMaterial(0.1f, 1.0f, 0.0f));
 		physicsBody->setDynamic(false);
 
-		auto sprite = Sprite::create("blueSprite.png");
-		sprite->setPosition(Vec2(x,y));
+		auto sprite = Sprite::create("maps/tm.png");
+		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
 		sprite->setPhysicsBody(physicsBody);
 
 		layer->addChild(sprite);
