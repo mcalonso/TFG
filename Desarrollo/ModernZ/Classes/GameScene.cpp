@@ -40,6 +40,7 @@ bool GameScene::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	map = new MapGame(this);
+	player = new Player(this);
 
     return true;
 }

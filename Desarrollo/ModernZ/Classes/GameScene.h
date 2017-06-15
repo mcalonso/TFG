@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Map.h"
+#include "Player.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -18,6 +19,7 @@ public:
 
 private: 
 	MapGame *map;
+	Player *player;
 	cocos2d::PhysicsWorld *sceneWorld;
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
