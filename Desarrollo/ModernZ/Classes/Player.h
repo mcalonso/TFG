@@ -7,6 +7,7 @@ class Player
 {
 public:
 	Player(cocos2d::Layer *layer);
+	void moveTo(int dir);
 
 private:
 	cocos2d::Size visibleSize;
