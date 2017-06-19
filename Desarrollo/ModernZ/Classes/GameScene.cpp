@@ -46,29 +46,16 @@ bool GameScene::init()
 	auto eventListener = EventListenerKeyboard::create();
 
 	eventListener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
-
-		switch (keyCode) {
-		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		case EventKeyboard::KeyCode::KEY_A:
-			CCLOG("Estoy pulsando A");
-			break;
-		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		case EventKeyboard::KeyCode::KEY_D:
-			CCLOG("Estoy pulsando D");
-			break;
-		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-		case EventKeyboard::KeyCode::KEY_W:
-			CCLOG("Estoy pulsando W");
-			break;
-		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		case EventKeyboard::KeyCode::KEY_S:
-			CCLOG("Estoy pulsando S");
-			break;
-		}
+		
+		//onKeyPressBegan(key);
 	};
 
-	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-
-
     return true;
+}
+
+bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode key)
+{
+	CCLOG("Estoy pulsando S");
+
+	return true;
 }

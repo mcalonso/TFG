@@ -23,6 +23,7 @@ private:
 	cocos2d::PhysicsWorld *sceneWorld;
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
+	bool onKeyPressBegan(cocos2d::EventKeyboard::KeyCode key);
 };
 
 #endif // __GAME_SCENE_H__
