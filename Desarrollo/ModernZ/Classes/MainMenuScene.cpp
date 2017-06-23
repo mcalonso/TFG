@@ -38,6 +38,8 @@ bool MainMenuScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Director::getInstance()->setDisplayStats(false);
+
 
 	auto backgroundSprite = Sprite::create("backgroundMenu.jpg");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));

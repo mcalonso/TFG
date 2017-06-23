@@ -17,13 +17,26 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 
+	void update(float dt);
+
 private: 
 	MapGame *map;
 	Player *ignatius;
+	Player *nereita;
+	Player *curretPlayer;
 	cocos2d::PhysicsWorld *sceneWorld;
+	//cocos2d::Camera *cam;
+
+	cocos2d::Size visibleSize;
+	cocos2d::Vec2 origin;
+	float offSetX;
+	float offSetY;
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
-	bool onKeyPressBegan(cocos2d::EventKeyboard::KeyCode key);
+	bool onContactBegin(cocos2d::PhysicsContact &contact);
+
+	bool onKeyPressBegan(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event *event);
+	bool onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event *event);
 };
 
 #endif // __GAME_SCENE_H__

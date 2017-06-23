@@ -7,6 +7,8 @@ class MapGame
 {
 public:
 	MapGame(cocos2d::Layer *layer);
+	cocos2d::Sprite* getBackgroundSprite() { return backgroundSprite; }
+	cocos2d::TMXTiledMap* getBackgroundMap() { return backgoundMap; }
 
 private:
 	cocos2d::Size visibleSize;

@@ -1,4 +1,5 @@
 #include "SplashScene.h"
+#include "SplashSceneVideo.h"
 #include "MainMenuScene.h"
 #include "Definitions.h"
 #include "cocostudio/CocoStudio.h"
@@ -35,6 +36,7 @@ bool SplashScene::init()
     
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Director::getInstance()->setDisplayStats(false);
 
 	this->scheduleOnce(schedule_selector(SplashScene::openMainMenu), DISPLAY_TIME_SPLASH_SCENE);
 
