@@ -2,16 +2,22 @@
 #define __PLAYER_H__
 
 #include "cocos2d.h"
+#include <Box2D/Box2D.h>
 
 class Player
 {
 public:
-	Player(cocos2d::Layer *layer, int type);
+	Player(cocos2d::Layer *layer, int type, b2World* w);
 	void jump(int dir);
-	void setJumping(bool j);
 	void move(int d);
 	void stopPlayer();
-	cocos2d::Vec2 getPosition() { return spritePlayer->getPosition(); }
+	void updatePlayer();
+
+	void initBody(b2Vec2 pos, b2Vec2 tam);
+	void initFixture(b2Vec2 tam);
+
+	b2Vec2 getPosition() { return m_pBody->GetPosition(); }
+	void setJumping(bool j) { jumping = j; }
 
 private:
 	cocos2d::Size visibleSize;
@@ -19,6 +25,9 @@ private:
 	cocos2d::Sprite *spritePlayer;
 	bool jumping;
 	int dir;
+
+	b2Body* m_pBody;
+	b2World* _world;
 
 
 };

@@ -2,8 +2,10 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include <Box2D/Box2D.h>
 #include "Map.h"
 #include "Player.h"
+#include "MyContactListener.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -18,22 +20,23 @@ public:
     CREATE_FUNC(GameScene);
 
 	void update(float dt);
+	void updateWorld(float dt);
+	void initWorld();
+	Player* getPlayer() { return curretPlayer; }
 
 private: 
 	MapGame *map;
 	Player *ignatius;
 	Player *nereita;
 	Player *curretPlayer;
-	cocos2d::PhysicsWorld *sceneWorld;
-	//cocos2d::Camera *cam;
+	b2World* world;
+	MyContactListener* contactListener;
+
 
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 	float offSetX;
 	float offSetY;
-
-	void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
-	bool onContactBegin(cocos2d::PhysicsContact &contact);
 
 	bool onKeyPressBegan(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event *event);
 	bool onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event *event);

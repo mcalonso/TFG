@@ -9,19 +9,14 @@ using namespace cocostudio::timeline;
 Scene* GameScene::createScene()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_NONE);
+	auto scene = Scene::create();
 	Director::getInstance()->setDisplayStats(false);
 
 	// 'layer' is an autorelease object
 	auto layer = GameScene::create();
-	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	// add layer as a child to scene
 	scene->addChild(layer);
-
-    // add layer as a child to scene
-    scene->addChild(layer);
 
     // return the scene
     return scene;
@@ -44,9 +39,10 @@ bool GameScene::init()
 	offSetY = visibleSize.height / 2 + origin.y;
 
 	//Define Game Objects
-	map = new MapGame(this);
-	ignatius = new Player(this, 1);
-	nereita = new Player(this, 2);
+	initWorld();
+	map = new MapGame(this, world);
+	ignatius = new Player(this, 1, world);
+	//nereita = new Player(this, 2, world);
 	curretPlayer = ignatius;
 
 	//Define Game Events
@@ -55,27 +51,47 @@ bool GameScene::init()
 	_listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleasedBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listener,	this);
 
-	auto _contactListener = EventListenerPhysicsContact::create(); 
-	_contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(_contactListener, this);
-
 	//Define Game schedule Functons
 	this->schedule(schedule_selector(GameScene::update), 0.5f);
+	this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateWorld));
 
     return true;
 }
+
+void GameScene::initWorld() 
+{
+	b2Vec2 gravity;
+	gravity.Set(0.0f, -10.0f);
+	world = new b2World(gravity);
+	world->SetAllowSleeping(true);
+	world->SetContinuousPhysics(true);
+
+	contactListener = new MyContactListener(this);
+	world->SetContactListener(contactListener);
+}
+
+void GameScene::updateWorld(float dt)
+{
+	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
+	ignatius->updatePlayer();
+	//nereita->updatePlayer();
+
+	world->DrawDebugData();
+	world->ClearForces();
+}
+
 
 void GameScene::update(float dt) 
 {
 	//CCLOG("UPDATE");
 	auto cam = Camera::getDefaultCamera();
-	float posX = curretPlayer->getPosition().x;
-	float posY = curretPlayer->getPosition().y;
+	float posX = curretPlayer->getPosition().x * PPM;
+	float posY = curretPlayer->getPosition().y * PPM;
 
-	if (posX < offSetX)
+	/*if (posX < offSetX)
 		posX = offSetX;
 	if (posY < offSetY )
-		posY = offSetY;
+		posY = offSetY;*/
 
 	float z = cam->getPosition3D().z;
 	CCMoveTo* action = CCMoveTo::create(0.5f, Vec3(posX, posY, z));
@@ -92,15 +108,10 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		curretPlayer->jump(1);
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_F1) {
-		if (this->getScene()->getPhysicsWorld()->getDebugDrawMask() == 0)
-		{
-			this->getScene()->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+		if(!Director::getInstance()->isDisplayStats())
 			Director::getInstance()->setDisplayStats(true);
-		}
-		else {
-			this->getScene()->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_NONE);
+		else
 			Director::getInstance()->setDisplayStats(false);
-		}
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_A) {
 		curretPlayer->move(-1);
@@ -118,19 +129,6 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 bool GameScene::onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::Event *event)
 {
 	curretPlayer->stopPlayer();
-
-	return true;
-}
-
-bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact){
-
-	PhysicsBody *a = contact.getShapeA()->getBody();
-	PhysicsBody *b = contact.getShapeB()->getBody();
-
-	if ((a->getCollisionBitmask() == 1 && b->getCollisionBitmask() == 2) || (a->getCollisionBitmask() == 2 && b->getCollisionBitmask() == 1)) {
-		curretPlayer->setJumping(false);
-		//CCLOG("Contacto");
-	}
 
 	return true;
 }

@@ -1,10 +1,14 @@
 #include "Map.h"
+#include "Definitions.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+#include <Box2D/Box2D.h>
 
 USING_NS_CC;
 
-MapGame::MapGame(cocos2d::Layer *layer) {
+MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
+
+	world = w;
 
 	visibleSize = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
@@ -35,15 +39,15 @@ MapGame::MapGame(cocos2d::Layer *layer) {
 
 		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
 
-		auto physicsBody = PhysicsBody::createBox(Size(tamw, tamh),
+		/*auto physicsBody = PhysicsBody::createBox(Size(tamw, tamh),
 			PhysicsMaterial(0.1f, 1.0f, 0.0f));
 		physicsBody->setDynamic(false);
 		physicsBody->setCollisionBitmask(2);
-		physicsBody->setContactTestBitmask(true);
+		physicsBody->setContactTestBitmask(true);*/
 
 		auto sprite = Sprite::create("maps/tm.png");
 		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
-		sprite->setPhysicsBody(physicsBody);
+		//sprite->setPhysicsBody(physicsBody);
 
 		layer->addChild(sprite);
 
@@ -61,14 +65,20 @@ MapGame::MapGame(cocos2d::Layer *layer) {
 
 		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
 
-		auto physicsBody = PhysicsBody::createBox(Size(tamw, tamh),
-			PhysicsMaterial(0.1f, 1.0f, 0.0f));
-		physicsBody->setDynamic(true);
-		physicsBody->setRotationEnable(false);
+		b2BodyDef auxBodyDef;
+		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
+		b2Body* auxBody = world->CreateBody(&auxBodyDef);
+		b2PolygonShape auxBox;
+		//bodies->insert(bodies->begin(), auxBody);
+		auxBox.SetAsBox(tamw / 2 * MPP, tamh / 2 * MPP);
+		b2Fixture* auxFixture = auxBody->CreateFixture(&auxBox, 0.0f);
+		auxFixture->SetUserData((void*)999);
+		b2Filter filter = auxFixture->GetFilterData();
+		filter.categoryBits = 2;
+		auxFixture->SetFilterData(filter);
 
 		auto sprite = Sprite::create("maps/tm.png");
 		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
-		sprite->setPhysicsBody(physicsBody);
 
 		layer->addChild(sprite);
 
