@@ -1,6 +1,7 @@
 #ifndef __MAP_GAME_H__
 #define __MAP_GAME_H__
 
+#include <Box2D/Box2D.h>
 #include "cocos2d.h"
 
 class MapGame

@@ -39,15 +39,8 @@ MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
 
 		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
 
-		/*auto physicsBody = PhysicsBody::createBox(Size(tamw, tamh),
-			PhysicsMaterial(0.1f, 1.0f, 0.0f));
-		physicsBody->setDynamic(false);
-		physicsBody->setCollisionBitmask(2);
-		physicsBody->setContactTestBitmask(true);*/
-
 		auto sprite = Sprite::create("maps/tm.png");
 		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
-		//sprite->setPhysicsBody(physicsBody);
 
 		layer->addChild(sprite);
 
@@ -66,6 +59,7 @@ MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
 		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
 
 		b2BodyDef auxBodyDef;
+		auxBodyDef.type = b2_staticBody;
 		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
 		b2Body* auxBody = world->CreateBody(&auxBodyDef);
 		b2PolygonShape auxBox;

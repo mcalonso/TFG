@@ -88,10 +88,10 @@ void GameScene::update(float dt)
 	float posX = curretPlayer->getPosition().x * PPM;
 	float posY = curretPlayer->getPosition().y * PPM;
 
-	/*if (posX < offSetX)
+	if (posX < offSetX)
 		posX = offSetX;
 	if (posY < offSetY )
-		posY = offSetY;*/
+		posY = offSetY;
 
 	float z = cam->getPosition3D().z;
 	CCMoveTo* action = CCMoveTo::create(0.5f, Vec3(posX, posY, z));

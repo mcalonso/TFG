@@ -27,7 +27,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithFullScreen("ModernZ");
+		//glview = GLViewImpl::createWithFullScreen("ModernZ");
+		glview = GLViewImpl::create("ModernZ");
         director->setOpenGLView(glview);
     }
 
