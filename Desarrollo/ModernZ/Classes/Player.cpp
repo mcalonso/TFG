@@ -36,7 +36,7 @@ Player::Player(cocos2d::Layer *layer, int type, b2World* w) {
 void Player::updatePlayer()
 {
 	spritePlayer->setPosition(Vec2(m_pBody->GetPosition().x * PPM, m_pBody->GetPosition().y * PPM));
-	CCLOG("Posicion: %f %f", m_pBody->GetPosition().x, m_pBody->GetPosition().y);
+	//CCLOG("Posicion: %f %f", m_pBody->GetPosition().x, m_pBody->GetPosition().y);
 
 }
 

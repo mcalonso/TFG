@@ -52,10 +52,16 @@ MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
 		filter.categoryBits = 2;
 		auxFixture->SetFilterData(filter);
 
-		auto sprite = Sprite::create("maps/colDebug.png");
-		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
+		auto rectNode = DrawNode::create();
+		Vec2 rectangle[4];
+		rectangle[0] = Vec2(x, y);
+		rectangle[1] = Vec2(x, y+tamh);
+		rectangle[2] = Vec2(x+tamw, y+tamh);
+		rectangle[3] = Vec2(x+tamw, y);
 
-		layer->addChild(sprite);
+		Color4F white(1, 1, 1, 1);
+		rectNode->drawPolygon(rectangle, 4, white, 1, white);
+		layer->addChild(rectNode);
 
 	}
 

@@ -39,9 +39,6 @@
     <ClCompile Include="..\Classes\MyContactListener.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CocosDebugDraw.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -72,9 +69,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MyContactListener.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CocosDebugDraw.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

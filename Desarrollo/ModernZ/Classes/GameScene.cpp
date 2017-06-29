@@ -1,5 +1,4 @@
 #include "GameScene.h"
-#include "CocosDebugDraw.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
@@ -64,9 +63,6 @@ void GameScene::initWorld()
 	b2Vec2 gravity;
 	gravity.Set(0.0f, -10.0f);
 	world = new b2World(gravity);
-
-	CocosDebugDraw *m_debugDraw = new CocosDebugDraw(PPM);
-	world->SetDebugDraw(m_debugDraw);
 
 	world->SetAllowSleeping(true);
 	world->SetContinuousPhysics(true);
