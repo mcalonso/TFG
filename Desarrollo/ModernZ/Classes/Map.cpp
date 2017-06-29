@@ -37,9 +37,22 @@ MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
+		CCLOG("Recogidas colisiones: %f %f %f %f", x, y, tamw, tamh);
 
-		auto sprite = Sprite::create("maps/tm.png");
+		b2BodyDef auxBodyDef;
+		auxBodyDef.type = b2_staticBody;
+		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
+		b2Body* auxBody = world->CreateBody(&auxBodyDef);
+		b2PolygonShape auxBox;
+		//bodies->insert(bodies->begin(), auxBody);
+		auxBox.SetAsBox(tamw / 2 * MPP, tamh / 2 * MPP);
+		b2Fixture* auxFixture = auxBody->CreateFixture(&auxBox, 0.0f);
+		auxFixture->SetUserData((void*)999);
+		b2Filter filter = auxFixture->GetFilterData();
+		filter.categoryBits = 2;
+		auxFixture->SetFilterData(filter);
+
+		auto sprite = Sprite::create("maps/colDebug.png");
 		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
 
 		layer->addChild(sprite);
@@ -56,20 +69,7 @@ MapGame::MapGame(cocos2d::Layer *layer, b2World *w) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidos: %f %f %f %f", x, y, tamw, tamh);
-
-		b2BodyDef auxBodyDef;
-		auxBodyDef.type = b2_staticBody;
-		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
-		b2Body* auxBody = world->CreateBody(&auxBodyDef);
-		b2PolygonShape auxBox;
-		//bodies->insert(bodies->begin(), auxBody);
-		auxBox.SetAsBox(tamw / 2 * MPP, tamh / 2 * MPP);
-		b2Fixture* auxFixture = auxBody->CreateFixture(&auxBox, 0.0f);
-		auxFixture->SetUserData((void*)999);
-		b2Filter filter = auxFixture->GetFilterData();
-		filter.categoryBits = 2;
-		auxFixture->SetFilterData(filter);
+		CCLOG("Recogidos objetos: %f %f %f %f", x, y, tamw, tamh);
 
 		auto sprite = Sprite::create("maps/tm.png");
 		sprite->setPosition(Vec2(x + (tamw / 2), y + (tamh / 2)));
