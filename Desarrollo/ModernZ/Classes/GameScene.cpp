@@ -41,8 +41,6 @@ bool GameScene::init()
 	//Define Game Objects
 	initWorld();
 	map = new MapGame(this, world);
-	ignatius = new Player(this, 1, world);
-	//nereita = new Player(this, 2, world);
 	curretPlayer = ignatius;
 
 	//Define Game Events
@@ -61,21 +59,27 @@ bool GameScene::init()
 void GameScene::initWorld() 
 {
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -10.0f);
+	gravity.Set(0.0f, -20.0f);
 	world = new b2World(gravity);
 
-	world->SetAllowSleeping(true);
-	world->SetContinuousPhysics(true);
+	//world->SetAllowSleeping(false);
+	//world->SetContinuousPhysics(true);
 
 	contactListener = new MyContactListener(this);
 	world->SetContactListener(contactListener);
+}
+
+void GameScene::initPlayers(b2Vec2 pos, int type)
+{
+	if(type == 1) ignatius = new Player(this, type, pos, world);
+	else		  nereita = new Player(this, type, pos, world);
 }
 
 void GameScene::updateWorld(float dt)
 {
 	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
 	ignatius->updatePlayer();
-	//nereita->updatePlayer();
+	nereita->updatePlayer();
 
 	world->DrawDebugData();
 	world->ClearForces();
@@ -129,7 +133,8 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 }
 bool GameScene::onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::Event *event)
 {
-	curretPlayer->stopPlayer();
+	if (code != cocos2d::EventKeyboard::KeyCode::KEY_SPACE)
+		curretPlayer->stopPlayer();
 
 	return true;
 }

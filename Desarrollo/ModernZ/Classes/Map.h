@@ -3,11 +3,13 @@
 
 #include <Box2D/Box2D.h>
 #include "cocos2d.h"
+class GameScene;
+
 
 class MapGame
 {
 public:
-	MapGame(cocos2d::Layer *layer, b2World *w);
+	MapGame(GameScene *scene, b2World *w);
 	cocos2d::Sprite* getBackgroundSprite() { return backgroundSprite; }
 	cocos2d::TMXTiledMap* getBackgroundMap() { return backgoundMap; }
 

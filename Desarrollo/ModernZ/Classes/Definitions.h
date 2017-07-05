@@ -14,10 +14,16 @@
 #define PPM 32.0f               //PIXELS POR METRO
 #define MPP (1.0f/PPM)          //METROS POR PIXEL
 
+//Define player
+#define velPlayer 15
+#define jumpForce 30
+
 //Define user data body
 #define DATA_PLATFORM				1
 #define DATA_PLAYER					2
-#define DATA_PLAYER_SENSOR			3
+#define DATA_PLAYER_SENSOR1			3
+#define DATA_PLAYER_SENSOR2			4
+#define DATA_VOID					5
 
 //Define id cllision mask
 #define M_PLAYER					0x0001

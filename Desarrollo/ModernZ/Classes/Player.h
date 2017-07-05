@@ -7,7 +7,7 @@
 class Player
 {
 public:
-	Player(cocos2d::Layer *layer, int type, b2World* w);
+	Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w);
 	void jump(int dir);
 	void move(int d);
 	void stopPlayer();
@@ -16,6 +16,7 @@ public:
 	void initBody(b2Vec2 pos, b2Vec2 tam);
 	void initFixture(b2Vec2 tam);
 
+	int getTypePlayer() { return typePlayer; }
 	b2Vec2 getPosition() { return m_pBody->GetPosition(); }
 	void setJumping(bool j) { jumping = j; }
 
@@ -25,6 +26,7 @@ private:
 	cocos2d::Sprite *spritePlayer;
 	bool jumping;
 	int dir;
+	int typePlayer;
 
 	b2Body* m_pBody;
 	b2World* _world;

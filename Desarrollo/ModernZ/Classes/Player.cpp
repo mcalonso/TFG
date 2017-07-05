@@ -3,27 +3,25 @@
 #include "ui/CocosGUI.h"
 #include "Definitions.h"
 
+
 USING_NS_CC;
 
-Player::Player(cocos2d::Layer *layer, int type, b2World* w) {
+Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 	_world = w;
 
 	visibleSize = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
 
-	if (type == 1) {
-		spritePlayer = Sprite::create("player/playerOriginal.png"); 
-		spritePlayer->setPosition(200, 600);
-		initBody(b2Vec2(200 * MPP, 600 * MPP), b2Vec2(10 * MPP, 10 * MPP));
-		initFixture(b2Vec2(10 * MPP, 10 * MPP));
-	}
-	else { 
-		spritePlayer = Sprite::create("player/playerS.png"); 
-		spritePlayer->setPosition(300, 600);
-		initBody(b2Vec2(300 * MPP, 600 * MPP), b2Vec2(10 * MPP, 10 * MPP));
-		initFixture(b2Vec2(10 * MPP, 10 * MPP));
-	}
+	typePlayer = type;
+
+	if (type == 1) {spritePlayer = Sprite::create("player/playerOriginal.png"); }
+	else { 	spritePlayer = Sprite::create("player/playerS.png"); }
+
+	spritePlayer->setPosition(pos.x, pos.y);
+	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(10 * MPP, 10 * MPP));
+	initFixture(b2Vec2(10 * MPP, 10 * MPP));
+	m_pBody->SetTransform(b2Vec2(pos.x * MPP, pos.y * MPP), m_pBody->GetAngle());
 
 	spritePlayer->setScale(0.2f);
 
@@ -36,29 +34,26 @@ Player::Player(cocos2d::Layer *layer, int type, b2World* w) {
 void Player::updatePlayer()
 {
 	spritePlayer->setPosition(Vec2(m_pBody->GetPosition().x * PPM, m_pBody->GetPosition().y * PPM));
-	//CCLOG("Posicion: %f %f", m_pBody->GetPosition().x, m_pBody->GetPosition().y);
-
 }
 
 void Player::jump(int dir) {
 
-	if (!jumping) {
-
-		//spritePlayer->getPhysicsBody()->setVelocity(cocos2d::Vec2(spritePlayer->getPhysicsBody()->getVelocity().x, 200));
-		m_pBody->SetTransform(b2Vec2(500*MPP, 500*MPP), m_pBody->GetAngle());
-		//jumping = true;
+	if (!jumping) 
+	{
+		m_pBody->ApplyLinearImpulse(b2Vec2(m_pBody->GetLinearVelocity().x, jumpForce), m_pBody->GetWorldCenter(), true);
+		jumping = true;
 	}
 }
 
 void Player::move(int d) {
 
 	dir = d;
-	//spritePlayer->getPhysicsBody()->setVelocity(cocos2d::Vec2(100 * dir, spritePlayer->getPhysicsBody()->getVelocity().y));
+	m_pBody->ApplyLinearImpulse(b2Vec2(velPlayer*dir, 0), m_pBody->GetWorldCenter(), true);
 }
 
 void Player::stopPlayer() {
 
-	//spritePlayer->getPhysicsBody()->setVelocity(cocos2d::Vec2(0, spritePlayer->getPhysicsBody()->getVelocity().y));
+	m_pBody->SetLinearVelocity(b2Vec2(0, m_pBody->GetLinearVelocity().y));
 }
 
 void Player::initBody(b2Vec2 pos, b2Vec2 tam) {
@@ -74,9 +69,9 @@ void Player::initFixture(b2Vec2 tam) {
 	b2PolygonShape polyShape;
 	polyShape.SetAsBox((tam.x), (tam.y));
 	fixtureDef.shape = &polyShape;
-	fixtureDef.friction = 0;
+	fixtureDef.friction = 50;
 	fixtureDef.restitution = 0;
-	fixtureDef.density = 20;
+	fixtureDef.density = 5;
 	//fixtureDef.filter.categoryBits = M_PLAYER;
 	//fixtureDef.filter.maskBits = M_SUELO;
 	b2Fixture* fixture = m_pBody->CreateFixture(&fixtureDef);
@@ -85,5 +80,7 @@ void Player::initFixture(b2Vec2 tam) {
 	fixtureDef.isSensor = true;
 	//fixtureDef.filter.maskBits = M_SUELO;
 	b2Fixture* sensorFixture = m_pBody->CreateFixture(&fixtureDef);
-	sensorFixture->SetUserData((void*)DATA_PLAYER_SENSOR);
+
+	if(typePlayer == 1)sensorFixture->SetUserData((void*)DATA_PLAYER_SENSOR1);
+	else sensorFixture->SetUserData((void*)DATA_PLAYER_SENSOR2);
 }

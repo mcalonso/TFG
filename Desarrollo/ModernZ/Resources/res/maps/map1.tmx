@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="402">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="421">
  <tileset firstgid="1" name="tilemap6" tilewidth="16" tileheight="16" tilecount="624" columns="16">
   <image source="tileset.png" width="256" height="631"/>
   <tile id="226">
@@ -15012,7 +15012,13 @@
    <tile gid="226"/>
   </data>
  </layer>
- <objectgroup name="objetos"/>
+ <objectgroup name="hostiles">
+  <object id="419" name="1" x="-504" y="1444" width="4400" height="128"/>
+ </objectgroup>
+ <objectgroup name="players">
+  <object id="417" name="1" gid="402" x="656" y="272" width="16" height="16"/>
+  <object id="418" name="2" gid="402" x="432" y="912" width="16" height="16"/>
+ </objectgroup>
  <objectgroup name="colisiones">
   <object id="394" x="0" y="1184" width="3200" height="70"/>
   <object id="396" x="416" y="1040" width="528" height="64"/>
@@ -15020,6 +15026,6 @@
   <object id="398" x="1456" y="864" width="528" height="64"/>
   <object id="399" x="912" y="656" width="528" height="64"/>
   <object id="400" x="656" y="416" width="528" height="64"/>
-  <object id="401" x="592" y="-144"/>
+  <object id="402" x="-16" y="0" width="32" height="1248"/>
  </objectgroup>
 </map>

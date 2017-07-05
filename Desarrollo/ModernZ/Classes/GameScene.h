@@ -22,6 +22,8 @@ public:
 	void update(float dt);
 	void updateWorld(float dt);
 	void initWorld();
+	void initPlayers(b2Vec2 pos, int type);
+
 	Player* getPlayer() { return curretPlayer; }
 
 private: 
