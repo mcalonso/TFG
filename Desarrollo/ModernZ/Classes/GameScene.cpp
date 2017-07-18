@@ -62,7 +62,7 @@ void GameScene::initWorld()
 	gravity.Set(0.0f, -20.0f);
 	world = new b2World(gravity);
 
-	//world->SetAllowSleeping(false);
+	//world->SetAllowSleeping(true);
 	//world->SetContinuousPhysics(true);
 
 	contactListener = new MyContactListener(this);

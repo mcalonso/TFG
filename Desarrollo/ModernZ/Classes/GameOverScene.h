@@ -15,9 +15,9 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameOverScene);
 
-private:
-	void openMainMenu(float dt);
-	void exitGame(float dt);
+	void returnMainMemu(cocos2d::Ref *sender);
+	void exitGame(cocos2d::Ref *sender);
+
 };
 
 #endif // __GAME_OVER_SCENE_H__

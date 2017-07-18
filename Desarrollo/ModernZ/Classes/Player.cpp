@@ -57,7 +57,7 @@ void Player::stopPlayer() {
 }
 
 void Player::initBody(b2Vec2 pos, b2Vec2 tam) {
-	CCLOG("Creamos el body en: %f %f", pos.x, pos.y);
+	CCLOG("Create body in: %f %f", pos.x, pos.y);
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(pos.x + (tam.x), -1 * (pos.y - (tam.y)));
 	bodyDef.type = b2_dynamicBody;

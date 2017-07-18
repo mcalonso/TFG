@@ -21,7 +21,7 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 	backgoundMap = TMXTiledMap::create("maps/map1.tmx");
 	scene->addChild(backgoundMap);
 
-	CCLOG("Empieza la carga de mapa");
+	CCLOG("Begin load map");
 
 	float x;
 	float y;
@@ -39,7 +39,7 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidas colisiones: %f %f %f %f", x, y, tamw, tamh);
+		CCLOG("Collisions: %f %f %f %f", x, y, tamw, tamh);
 
 		b2BodyDef auxBodyDef;
 		auxBodyDef.type = b2_staticBody;
@@ -55,20 +55,6 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		fixtureDef.density = 50;
 		b2Fixture* auxFixture = auxBody->CreateFixture(&fixtureDef);
 		auxFixture->SetUserData((void*)DATA_PLATFORM);
-
-		//Rect Debug Colisiones
-		/*auto rectNode = DrawNode::create();
-		Vec2 rectangle[4];
-		rectangle[0] = Vec2(x, y);
-		rectangle[1] = Vec2(x, y+tamh);
-		rectangle[2] = Vec2(x+tamw, y+tamh);
-		rectangle[3] = Vec2(x+tamw, y);
-
-		Color4F white(1, 1, 1, 1);
-		rectNode->drawPolygon(rectangle, 4, white, 1, white);
-		scene->addChild(rectNode);*/
-		/////////////////////////////////////////////////////////
-
 	}
 
 	objectsGroup = backgoundMap->getObjectGroup("players");
@@ -82,7 +68,7 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidos Players: %f %f %f %f %i", x, y, tamw, tamh, type);
+		CCLOG("Players: %f %f %f %f %i", x, y, tamw, tamh, type);
 
 		scene->initPlayers(b2Vec2(x, y), type);
 	}
@@ -98,7 +84,7 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Recogidos elementos hostiles: %f %f %f %f %i", x, y, tamw, tamh, type);
+		CCLOG("Void objects: %f %f %f %f %i", x, y, tamw, tamh, type);
 
 		b2BodyDef auxBodyDef;
 		auxBodyDef.type = b2_staticBody;
@@ -116,5 +102,34 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		auxFixture->SetUserData((void*)DATA_VOID);
 	}
 
-	CCLOG("Fin de la carga de mapa");
+	objectsGroup = backgoundMap->getObjectGroup("destruibles");
+
+	objects = objectsGroup->getObjects();
+	for (auto &obj : objects) {
+		auto &properties = obj.asValueMap();
+		x = properties["x"].asFloat();
+		y = properties["y"].asFloat();
+		type = properties["name"].asInt();
+		tamh = properties["height"].asFloat();
+		tamw = properties["width"].asFloat();
+
+		CCLOG("Destroyable objects: %f %f %f %f %i", x, y, tamw, tamh, type);
+
+		b2BodyDef auxBodyDef;
+		auxBodyDef.type = b2_staticBody;
+		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
+		b2Body* auxBody = world->CreateBody(&auxBodyDef);
+		b2FixtureDef fixtureDef;
+		b2PolygonShape auxBox;
+		//bodies->insert(bodies->begin(), auxBody);
+		auxBox.SetAsBox(tamw / 2 * MPP, tamh / 2 * MPP);
+		fixtureDef.shape = &auxBox;
+		fixtureDef.friction = 0;
+		fixtureDef.restitution = 0;
+		fixtureDef.density = 50;
+		b2Fixture* auxFixture = auxBody->CreateFixture(&fixtureDef);
+		auxFixture->SetUserData((void*)DATA_DESTROYABLE);
+	}
+
+	CCLOG("End load map");
 }

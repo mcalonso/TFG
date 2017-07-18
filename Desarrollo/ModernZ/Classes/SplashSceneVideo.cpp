@@ -1,5 +1,5 @@
 #include "SplashSceneVideo.h"
-#include "MainMenuScene.h"
+#include "GameOverScene.h"
 #include "Definitions.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
@@ -35,13 +35,20 @@ bool SplashSceneVideo::init()
     
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Director::getInstance()->setDisplayStats(false);
+
+	this->scheduleOnce(schedule_selector(SplashSceneVideo::openMainMenu), DISPLAY_TIME_SPLASH_SCENE);
+
+	auto backgroundSprite = Sprite::create("backgroundBlack.jpg");
+	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	this->addChild(backgroundSprite);
 
     return true;
 }
 
 void SplashSceneVideo::openMainMenu(float dt) {
 
-	auto scene = MainMenuScene::createScene();
+	auto scene = GameOverScene::createScene();
 
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }

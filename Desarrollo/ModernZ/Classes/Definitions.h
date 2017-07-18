@@ -24,6 +24,7 @@
 #define DATA_PLAYER_SENSOR1			3
 #define DATA_PLAYER_SENSOR2			4
 #define DATA_VOID					5
+#define DATA_DESTROYABLE			6
 
 //Define id cllision mask
 #define M_PLAYER					0x0001

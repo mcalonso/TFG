@@ -1,8 +1,9 @@
 #include "MyContactListener.h"
-#include "MainMenuScene.h"
+#include "SplashSceneVideo.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "Player.h"
+#include "Platform.h"
 #include "GameScene.h"
 
 USING_NS_CC;
@@ -24,10 +25,27 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_VOID)) ||
 		((B == DATA_PLAYER_SENSOR1 || B == DATA_PLAYER_SENSOR2) && (A == DATA_VOID)))
 	{
-		CCLOG("Player choca con los pinchos");
+		CCLOG("Player collides with void object");
 
-		auto scene = MainMenuScene::createScene();
+		auto scene = SplashSceneVideo::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	}
+
+	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_DESTROYABLE)) ||
+		((B == DATA_PLAYER_SENSOR1 || B == DATA_PLAYER_SENSOR2) && (A == DATA_DESTROYABLE)))
+	{
+		if (A == DATA_DESTROYABLE) 
+		{
+			CCLOG("Change A");
+			contact->GetFixtureA()->GetBody()->SetType(b2_dynamicBody);
+		}
+		else
+		{
+			CCLOG("Change B");
+			contact->GetFixtureB()->GetBody()->SetType(b2_dynamicBody);
+		}
+
+		CCLOG("Player collindes with destroyable object");
 	}
 
 }
@@ -44,9 +62,9 @@ void MyContactListener::EndContact(b2Contact* contact) {
 	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_VOID)) ||
 		((B == DATA_PLAYER_SENSOR1 || B == DATA_PLAYER_SENSOR2) && (A == DATA_VOID)))
 	{
-		CCLOG("Player choca con los pinchos");
+		CCLOG("Player collides with void object");
 
-		auto scene = MainMenuScene::createScene();
+		auto scene = SplashSceneVideo::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 	}
 
