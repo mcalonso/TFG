@@ -75,11 +75,17 @@ void GameScene::initPlayers(b2Vec2 pos, int type)
 	else		  nereita = new Player(this, type, pos, world);
 }
 
+void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
+{
+	obj = new GameObject(this, pos, tam, world);
+}
+
 void GameScene::updateWorld(float dt)
 {
 	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
 	ignatius->updatePlayer();
 	nereita->updatePlayer();
+	obj->updateGameObject();
 
 	world->DrawDebugData();
 	world->ClearForces();

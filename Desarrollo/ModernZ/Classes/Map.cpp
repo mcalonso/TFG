@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Definitions.h"
 #include "GameScene.h"
+#include "GameObject.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include <Box2D/Box2D.h>
@@ -109,26 +110,23 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		auto &properties = obj.asValueMap();
 		x = properties["x"].asFloat();
 		y = properties["y"].asFloat();
-		type = properties["name"].asInt();
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
-		CCLOG("Destroyable objects: %f %f %f %f %i", x, y, tamw, tamh, type);
+		CCLOG("Destroyable objects: %f %f %f %f", x, y, tamw, tamh);
 
-		b2BodyDef auxBodyDef;
-		auxBodyDef.type = b2_staticBody;
-		auxBodyDef.position.Set((x + (tamw / 2))*MPP, (y + (tamh / 2))*MPP);
-		b2Body* auxBody = world->CreateBody(&auxBodyDef);
-		b2FixtureDef fixtureDef;
-		b2PolygonShape auxBox;
-		//bodies->insert(bodies->begin(), auxBody);
-		auxBox.SetAsBox(tamw / 2 * MPP, tamh / 2 * MPP);
-		fixtureDef.shape = &auxBox;
-		fixtureDef.friction = 0;
-		fixtureDef.restitution = 0;
-		fixtureDef.density = 50;
-		b2Fixture* auxFixture = auxBody->CreateFixture(&fixtureDef);
-		auxFixture->SetUserData((void*)DATA_DESTROYABLE);
+		scene->initGameObjects(b2Vec2(x, y), b2Vec2(tamw, tamh));
+
+		auto rectNode = DrawNode::create();
+		Vec2 rectangle[4];
+		rectangle[0] = Vec2(-50, -50);
+		rectangle[1] = Vec2(50, -50);
+		rectangle[2] = Vec2(50, 50);
+		rectangle[3] = Vec2(-50, 50);
+
+		Color4F white(1, 1, 1, 1);
+		rectNode->drawPolygon(rectangle, 4, white, 1, white);
+		scene->addChild(rectNode);
 	}
 
 	CCLOG("End load map");

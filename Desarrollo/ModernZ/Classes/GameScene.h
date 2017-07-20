@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 #include "Map.h"
 #include "Player.h"
+#include "GameObject.h"
 #include "MyContactListener.h"
 
 class GameScene : public cocos2d::Layer
@@ -23,10 +24,12 @@ public:
 	void updateWorld(float dt);
 	void initWorld();
 	void initPlayers(b2Vec2 pos, int type);
+	void initGameObjects(b2Vec2 pos, b2Vec2 tam);
 
 	Player* getPlayer() { return curretPlayer; }
 
 private: 
+	GameObject* obj;
 	MapGame *map;
 	Player *ignatius;
 	Player *nereita;
