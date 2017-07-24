@@ -27,6 +27,9 @@ public:
 	void initGameObjects(b2Vec2 pos, b2Vec2 tam);
 
 	Player* getPlayer() { return curretPlayer; }
+	std::vector<GameObject*>* getObjects() { return &objects; }
+
+	void setGameObject(GameObject *obj);
 
 private: 
 	GameObject* obj;
@@ -37,6 +40,7 @@ private:
 	b2World* world;
 	MyContactListener* contactListener;
 
+	std::vector<GameObject*> objects;
 
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;

@@ -14,11 +14,16 @@ public:
 	void initFixture(b2Vec2 tam);
 
 	b2Vec2 getPosition() { return m_pBody->GetPosition(); }
+	b2Body* getBody() { return m_pBody; }
+	void setBodyType();
 
 private:
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 	cocos2d::Sprite *spriteGameObject;
+
+	b2Vec2 posBody;
+	b2Vec2 tamBody;
 
 	b2Body* m_pBody;
 	b2World* _world;

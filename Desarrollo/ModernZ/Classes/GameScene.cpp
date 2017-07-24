@@ -134,6 +134,9 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		if (curretPlayer == ignatius) { curretPlayer = nereita; }
 		else { curretPlayer = ignatius; }
 	}
+	/*else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
+		obj->setBodyType();
+	}*/
 
 	return true;
 }
@@ -143,4 +146,9 @@ bool GameScene::onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d
 		curretPlayer->stopPlayer();
 
 	return true;
+}
+
+void GameScene::setGameObject(GameObject *obj) 
+{
+	objects.push_back(obj);
 }

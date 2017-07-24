@@ -117,16 +117,16 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 
 		scene->initGameObjects(b2Vec2(x, y), b2Vec2(tamw, tamh));
 
-		auto rectNode = DrawNode::create();
+		/*auto rectNode = DrawNode::create();
 		Vec2 rectangle[4];
-		rectangle[0] = Vec2(-50, -50);
-		rectangle[1] = Vec2(50, -50);
-		rectangle[2] = Vec2(50, 50);
-		rectangle[3] = Vec2(-50, 50);
+		rectangle[0] = Vec2(x, y);
+		rectangle[1] = Vec2(x+tamw, y);
+		rectangle[2] = Vec2(x+tamw, y+tamh);
+		rectangle[3] = Vec2(x, y+tamh);
 
 		Color4F white(1, 1, 1, 1);
 		rectNode->drawPolygon(rectangle, 4, white, 1, white);
-		scene->addChild(rectNode);
+		scene->addChild(rectNode);*/
 	}
 
 	CCLOG("End load map");

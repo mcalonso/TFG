@@ -16,9 +16,11 @@ GameObject::GameObject(cocos2d::Layer *layer, b2Vec2 pos, b2Vec2 tam, b2World* w
 	spriteGameObject = Sprite::create("maps/platform.png");
 
 	spriteGameObject->setPosition(pos.x, pos.y);
-	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(tam.x * MPP, tam.y * MPP));
-	initFixture(b2Vec2(tam.x * MPP, tam.y * MPP));
-	m_pBody->SetTransform(b2Vec2(pos.x * MPP, pos.y * MPP), m_pBody->GetAngle());
+	initBody(pos, tam);
+	initFixture(tam);
+
+	posBody = pos;
+	tamBody = tam;
 
 	spriteGameObject->setScale(0.2f);
 
@@ -32,21 +34,42 @@ void GameObject::updateGameObject()
 }
 
 void GameObject::initBody(b2Vec2 pos, b2Vec2 tam) {
-	CCLOG("Create body in: %f %f", pos.x, pos.y);
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(pos.x + (tam.x), -1 * (pos.y - (tam.y)));
-	bodyDef.type = b2_staticBody;
-	m_pBody = _world->CreateBody(&bodyDef);
-	m_pBody->SetLinearDamping(0);
+
+	CCLOG("Create GameObject in: %f %f", pos.x, pos.y);
+
+	b2BodyDef auxBodyDef;
+	auxBodyDef.type = b2_staticBody;
+	auxBodyDef.position.Set((pos.x + (tam.x / 2))*MPP, (pos.y + (tam.y / 2))*MPP);
+	m_pBody = _world->CreateBody(&auxBodyDef);
 }
 void GameObject::initFixture(b2Vec2 tam) {
+
 	b2FixtureDef fixtureDef;
-	b2PolygonShape polyShape;
-	polyShape.SetAsBox((tam.x), (tam.y));
-	fixtureDef.shape = &polyShape;
-	fixtureDef.friction = 50;
+	b2PolygonShape auxBox;
+	auxBox.SetAsBox(tam.x / 2 * MPP, tam.y / 2 * MPP);
+	fixtureDef.shape = &auxBox;
+	fixtureDef.friction = 0;
 	fixtureDef.restitution = 0;
-	fixtureDef.density = 5;
-	b2Fixture* fixture = m_pBody->CreateFixture(&fixtureDef);
-	fixture->SetUserData((void*)DATA_DESTROYABLE);
+	fixtureDef.density = 50;
+	b2Fixture* auxFixture = m_pBody->CreateFixture(&fixtureDef);
+	auxFixture->SetUserData((void*)DATA_DESTROYABLE);
+}
+
+void GameObject::setBodyType()
+{
+	_world->DestroyBody(m_pBody);
+
+	b2BodyDef auxBodyDef;
+	auxBodyDef.type = b2_dynamicBody;
+	auxBodyDef.position.Set((posBody.x + (tamBody.x / 2))*MPP, (posBody.y + (tamBody.y / 2))*MPP);
+	m_pBody = _world->CreateBody(&auxBodyDef);
+	b2FixtureDef fixtureDef;
+	b2PolygonShape auxBox;
+	auxBox.SetAsBox(tamBody.x / 2 * MPP, tamBody.y / 2 * MPP);
+	fixtureDef.shape = &auxBox;
+	fixtureDef.friction = 0;
+	fixtureDef.restitution = 0;
+	fixtureDef.density = 50;
+	b2Fixture* auxFixture = m_pBody->CreateFixture(&fixtureDef);
+	auxFixture->SetUserData((void*)DATA_DESTROYABLE);
 }

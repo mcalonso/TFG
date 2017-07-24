@@ -28,6 +28,7 @@ private:
 	b2Contact* contact;
 	Player* player;
 	GameScene* contactScene;
+	std::vector<GameObject*> objects;
 
 
 
