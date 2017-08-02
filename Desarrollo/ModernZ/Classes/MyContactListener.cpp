@@ -36,9 +36,11 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 	{
 		for (unsigned int i = 0; i<objects->size(); i++)
 		{
-			if (objects->at(i)->getBody() == contact->GetFixtureA()->GetBody())
+			if (objects->at(i)->getBody() == contact->GetFixtureA()->GetBody()
+			 || objects->at(i)->getBody() == contact->GetFixtureB()->GetBody())
 			{
-				objects->at(i)->setBodyType();
+				if(objects->at(i)->getChange() == false)
+					objects->at(i)->setChange(true);
 			}
 		}
 

@@ -78,6 +78,8 @@ void GameScene::initPlayers(b2Vec2 pos, int type)
 void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
 {
 	obj = new GameObject(this, pos, tam, world);
+
+	objects.push_back(obj);
 }
 
 void GameScene::updateWorld(float dt)
@@ -85,7 +87,12 @@ void GameScene::updateWorld(float dt)
 	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
 	ignatius->updatePlayer();
 	nereita->updatePlayer();
-	obj->updateGameObject();
+
+	for (unsigned int i = 0; i<objects.size(); i++)
+	{
+		objects.at(i)->updateGameObject();;
+	}
+	//obj->updateGameObject();
 
 	world->DrawDebugData();
 	world->ClearForces();

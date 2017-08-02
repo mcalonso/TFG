@@ -2,12 +2,14 @@
 #define __MY_CONTACT_LISTENER_H__
 
 #include "cocos2d.h"
+#include <vector>
 #include "Definitions.h"
 #include <Box2D/Box2D.h>
 
 class GameScene;
 class MyContactListener;
 class Player;
+class GameObject;
 
 struct Contact2Method {
 	unsigned long A;
@@ -28,7 +30,7 @@ private:
 	b2Contact* contact;
 	Player* player;
 	GameScene* contactScene;
-	std::vector<GameObject*> objects;
+	std::vector<GameObject*>* objects;
 
 
 
