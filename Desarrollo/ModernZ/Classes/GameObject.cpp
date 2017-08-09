@@ -15,7 +15,7 @@ GameObject::GameObject(cocos2d::Layer *layer, b2Vec2 pos, b2Vec2 tam, b2World* w
 	visibleSize = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
 
-	spriteGameObject = Sprite::create("maps/platform2.png");
+	spriteGameObject = Sprite::create("maps/platform3.png");
 
 	spriteGameObject->setPosition(pos.x, pos.y);
 	initBody(pos, tam);

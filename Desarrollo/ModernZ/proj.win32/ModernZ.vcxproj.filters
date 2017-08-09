@@ -45,6 +45,15 @@
     <ClCompile Include="..\Classes\GameObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PathFinding\Lista.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PathFinding\Nodo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Bot.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -81,6 +90,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameObject.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PathFinding\Lista.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PathFinding\Nodo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Bot.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
