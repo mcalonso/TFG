@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 #include "Map.h"
 #include "Player.h"
+#include "Bot.h"
 #include "GameObject.h"
 #include "MyContactListener.h"
 
@@ -24,10 +25,13 @@ public:
 	void updateWorld(float dt);
 	void initWorld();
 	void initPlayers(b2Vec2 pos, int type);
+	void initBots(b2Vec2 pos, int type);
 	void initGameObjects(b2Vec2 pos, b2Vec2 tam);
+	void initNodes(b2Vec2 pos, b2Vec2 tam);
 
 	Player* getPlayer() { return curretPlayer; }
 	std::vector<GameObject*>* getObjects() { return &objects; }
+	std::vector<Node*>* getNodos() { return &nodos; }
 
 	void setGameObject(GameObject *obj);
 
@@ -40,7 +44,11 @@ private:
 	b2World* world;
 	MyContactListener* contactListener;
 
+	Bot *zombi1;
+	Node *nodo;
+
 	std::vector<GameObject*> objects;
+	std::vector<Node*> nodos;
 
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;

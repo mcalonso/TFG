@@ -129,5 +129,37 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		scene->addChild(rectNode);*/
 	}
 
+	objectsGroup = backgoundMap->getObjectGroup("bots");
+
+	objects = objectsGroup->getObjects();
+	for (auto &obj : objects) {
+		auto &properties = obj.asValueMap();
+		x = properties["x"].asFloat();
+		y = properties["y"].asFloat();
+		type = properties["name"].asInt();
+		tamh = properties["height"].asFloat();
+		tamw = properties["width"].asFloat();
+
+		CCLOG("Bot: %f %f %f %f %i", x, y, tamw, tamh, type);
+
+		scene->initBots(b2Vec2(x, y), type);
+	}
+
+	objectsGroup = backgoundMap->getObjectGroup("nodos");
+
+	objects = objectsGroup->getObjects();
+	for (auto &obj : objects) {
+		auto &properties = obj.asValueMap();
+		x = properties["x"].asFloat();
+		y = properties["y"].asFloat();
+		type = properties["name"].asInt();
+		tamh = properties["height"].asFloat();
+		tamw = properties["width"].asFloat();
+
+		CCLOG("Node: %f %f %f %f %i", x, y, tamw, tamh, type);
+
+		scene->initNodes(b2Vec2(x, y), type);
+	}
+
 	CCLOG("End load map");
 }

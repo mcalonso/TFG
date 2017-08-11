@@ -71,8 +71,13 @@ void GameScene::initWorld()
 
 void GameScene::initPlayers(b2Vec2 pos, int type)
 {
-	if(type == 1) ignatius = new Player(this, type, pos, world);
-	else		  nereita = new Player(this, type, pos, world);
+	if(type == 1)	ignatius = new Player(this, type, pos, world);
+	else				nereita = new Player(this, type, pos, world);
+}
+
+void GameScene::initBots(b2Vec2 pos, int type)
+{
+	if (type == 0)		zombi1 = new Bot(this, type, pos, world);
 }
 
 void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
@@ -82,11 +87,19 @@ void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
 	objects.push_back(obj);
 }
 
+void GameScene::initNodes(b2Vec2 pos, b2Vec2 tam)
+{
+	nodo = new Node(pos, tam, num, coste, nodoPadre);
+
+	nodos.push_back(nodo);
+}
+
 void GameScene::updateWorld(float dt)
 {
 	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
 	ignatius->updatePlayer();
 	nereita->updatePlayer();
+	zombi1->updatePlayer();
 
 	for (unsigned int i = 0; i<objects.size(); i++)
 	{
@@ -141,9 +154,9 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		if (curretPlayer == ignatius) { curretPlayer = nereita; }
 		else { curretPlayer = ignatius; }
 	}
-	/*else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
-		obj->setBodyType();
-	}*/
+	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
+		//zombi1->calcularPathfinding();
+	}
 
 	return true;
 }

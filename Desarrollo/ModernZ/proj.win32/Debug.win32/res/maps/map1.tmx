@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="429">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" backgroundcolor="#5e8eff" nextobjectid="431">
  <tileset firstgid="1" name="tilemap6" tilewidth="16" tileheight="16" tilecount="624" columns="16">
   <image source="tileset.png" width="256" height="631"/>
   <tile id="226">
@@ -15012,6 +15012,9 @@
    <tile gid="226"/>
   </data>
  </layer>
+ <objectgroup name="bots">
+  <object id="430" name="0" gid="402" x="912" y="912" width="16" height="16"/>
+ </objectgroup>
  <objectgroup name="destruibles">
   <object id="424" x="1984" y="864" width="272" height="64"/>
   <object id="425" x="1440" y="656" width="272" height="64"/>
