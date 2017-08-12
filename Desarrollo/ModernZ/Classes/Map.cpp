@@ -129,6 +129,23 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		scene->addChild(rectNode);*/
 	}
 
+	objectsGroup = backgoundMap->getObjectGroup("nodos");
+
+	objects = objectsGroup->getObjects();
+	for (auto &obj : objects) {
+		auto &properties = obj.asValueMap();
+		x = properties["x"].asFloat();
+		y = properties["y"].asFloat();
+		int name = properties["name"].asInt();
+		std::string adds = properties["type"].asString();
+		tamh = properties["height"].asFloat();
+		tamw = properties["width"].asFloat();
+
+		CCLOG("Node: %f %f %f %f", x, y, tamw, tamh);
+
+		scene->initNodes(b2Vec2(x, y), b2Vec2(tamw, tamh), name, adds);
+	}
+
 	objectsGroup = backgoundMap->getObjectGroup("bots");
 
 	objects = objectsGroup->getObjects();
@@ -143,22 +160,6 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		CCLOG("Bot: %f %f %f %f %i", x, y, tamw, tamh, type);
 
 		scene->initBots(b2Vec2(x, y), type);
-	}
-
-	objectsGroup = backgoundMap->getObjectGroup("nodos");
-
-	objects = objectsGroup->getObjects();
-	for (auto &obj : objects) {
-		auto &properties = obj.asValueMap();
-		x = properties["x"].asFloat();
-		y = properties["y"].asFloat();
-		type = properties["name"].asInt();
-		tamh = properties["height"].asFloat();
-		tamw = properties["width"].asFloat();
-
-		CCLOG("Node: %f %f %f %f %i", x, y, tamw, tamh, type);
-
-		scene->initNodes(b2Vec2(x, y), type);
 	}
 
 	CCLOG("End load map");

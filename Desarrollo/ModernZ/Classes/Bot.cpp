@@ -7,17 +7,35 @@
 
 USING_NS_CC;
 
-Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w):Player(layer, type, pos, w){
+Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodosMap):Player(layer, type, pos, w){
 
 	//_world = w;
-
+	nodos = nodosMap;
 }
 
 Nodo* Bot::buscaNumero(int num) {
 	Nodo *aux = NULL;
 
-	for (int i = 0; i< nodos.size(); i++) {
-		if (nodos.at(i)->getNumero() == num) return nodos.at(i);
+	for (int i = 0; i< nodos->size(); i++) {
+		if (nodos->at(i)->getNumero() == num) return nodos->at(i);
+	}
+	return aux;
+}
+
+Nodo* Bot::getCercanoTotal(float x, float y) {
+
+	Nodo *aux = NULL;
+	float dif = 100000;
+
+
+	for (int i = 0; i< nodos->size(); i++) {
+		CCLOG("x: %f ---- xnodo: %f", y, nodos->at(i)->getPosicion().y);
+		float coste = abs(nodos->at(i)->getPosicion().y - y) + abs(nodos->at(i)->getPosicion().x - x);
+		CCLOG("Nodo %i Coste %f", nodos->at(i)->getNumero(), coste);
+		if (coste<dif) {
+			dif = coste;
+			aux = nodos->at(i);
+		}
 	}
 	return aux;
 }

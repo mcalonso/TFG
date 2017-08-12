@@ -13,9 +13,10 @@ class Lista;
 class Bot: public Player
 {
 public:
-	Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w);
+	Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodos);
 	virtual void calcularPathfinding(Nodo* inicial, Nodo* objetivo);
 	void imprimirNodos();
+	Nodo* getCercanoTotal(float x, float y);
 	Nodo* buscaNumero(int i);
 
 private:
@@ -40,7 +41,7 @@ private:
 	float nodoy;
 
 	b2Vec2 posicionSpawn;
-	std::vector<Nodo*> nodos;
+	std::vector<Nodo*>* nodos;
 };
 
 #endif // __BOT_H__

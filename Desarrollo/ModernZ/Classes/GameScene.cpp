@@ -77,7 +77,7 @@ void GameScene::initPlayers(b2Vec2 pos, int type)
 
 void GameScene::initBots(b2Vec2 pos, int type)
 {
-	if (type == 0)		zombi1 = new Bot(this, type, pos, world);
+	if (type == 0)		zombi1 = new Bot(this, type, pos, world, &nodos);
 }
 
 void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
@@ -87,9 +87,21 @@ void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
 	objects.push_back(obj);
 }
 
-void GameScene::initNodes(b2Vec2 pos, b2Vec2 tam)
+void GameScene::initNodes(b2Vec2 pos, b2Vec2 tam, int name, std::string adds)
 {
-	nodo = new Node(pos, tam, num, coste, nodoPadre);
+	nodo = new Nodo(pos, tam, name, 0, NULL);
+
+	char * token;
+	char* chr = strdup(adds.c_str());
+	token = strtok(chr, ",");
+
+	while (token != NULL) {
+		int i = atoi(token);
+		nodo->addAdyacente(i);
+		token = strtok(NULL, ",");
+	}
+
+	CCLOG("Nodo Creado: %i", nodo->getNumero());
 
 	nodos.push_back(nodo);
 }
@@ -155,7 +167,9 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		else { curretPlayer = ignatius; }
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
-		//zombi1->calcularPathfinding();
+		//zombi1->getCercanoTotal(zombi1->getPosition().x, zombi1->getPosition().y);
+		CCLOG("Nodo mas cercano: %i", zombi1->getCercanoTotal(zombi1->getPosition().x, zombi1->getPosition().y)->getNumero());
+
 	}
 
 	return true;
