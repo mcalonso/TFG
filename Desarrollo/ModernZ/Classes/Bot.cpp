@@ -29,9 +29,7 @@ Nodo* Bot::getCercanoTotal(float x, float y) {
 
 
 	for (int i = 0; i< nodos->size(); i++) {
-		CCLOG("x: %f ---- xnodo: %f", y, nodos->at(i)->getPosicion().y);
-		float coste = abs(nodos->at(i)->getPosicion().y - y) + abs(nodos->at(i)->getPosicion().x - x);
-		CCLOG("Nodo %i Coste %f", nodos->at(i)->getNumero(), coste);
+		float coste = abs(nodos->at(i)->getPosicion().y*MPP - y) + abs(nodos->at(i)->getPosicion().x*MPP - x);
 		if (coste<dif) {
 			dif = coste;
 			aux = nodos->at(i);
@@ -42,14 +40,14 @@ Nodo* Bot::getCercanoTotal(float x, float y) {
 
 void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 {
+	CCLOG("<<<<<<<<<EMPIEZA PATHFINDING>>>>>>>>>");
 	Nodo* aux;
 	Nodo* nodoInicial = inicial;
 	Nodo* nodoDestino = objetivo;
 	Nodo* nodoActual;
 
 	if (nodoInicial == NULL || nodoDestino == NULL) {
-		//std::cout<<"Inicial: "<<nodoInicial<<" Destino: "<<nodoDestino<<std::endl;
-		//std::cout<<"NODO INICIAL O DESTINO ES IGUAL A NULL"<<std::endl;
+		CCLOG("Nodos nulos");
 		return;
 	}
 
@@ -63,17 +61,17 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 	if (nodoInicial->getPosicion().x == nodoDestino->getPosicion().x && nodoInicial->getPosicion().y == nodoDestino->getPosicion().y) {
 		pathfinding = new Lista();
 		pathfinding->insertar(nodoInicial);
-		//std::cout<<"<<<<<<<<<PATHFINDING>>>>>>>>>"<<std::endl;
+		CCLOG("<<<<<<<<<PATHFINDING>>>>>>>>>");
 		nodoFinIni = pathfinding->getHead();
-		//pathfinding->imprimirLista();
+		pathfinding->imprimirLista();
 	}
 	else if (nodoInicial->getPosicion().x != nodoDestino->getPosicion().x || nodoInicial->getPosicion().y != nodoDestino->getPosicion().y) {
 		nodoActual = new Nodo(nodoInicial->getPosicion(), b2Vec2(1, 1), nodoInicial->getNumero(), 0, NULL);
 		listaAbierta.insertar(nodoActual);
 		while (listaAbierta.getTamanyo() > 0 && listaAbierta.buscaNodo2(nodoDestino->getPosicion().x, nodoDestino->getPosicion().y) == NULL) {
 
-			//listaAbierta.imprimirLista();
-			//std::cout<<"NODO ACTUAL: "<<nodoActual->getNumero()<<std::endl;
+			listaAbierta.imprimirLista();
+			CCLOG("NODO ACTUAL: %i", nodoActual->getNumero());
 
 			nodoActual = listaAbierta.getMenorCosto();
 			listaAbierta.remove(nodoActual->getPosicion());
@@ -100,9 +98,9 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 			pathfinding->insertar(nodoActual);
 			nodoActual = nodoActual->getPadre();
 		}
-		//std::cout<<"<<<<<<<<<PATHFINDING>>>>>>>>>"<<std::endl;
+		CCLOG("<<<<<<<<<PATHFINDING>>>>>>>>>");
 		nodoFinIni = pathfinding->getHead();
-		//pathfinding->imprimirLista();
+		pathfinding->imprimirLista();
 		//std::cout<<std::endl;
 	}
 }
