@@ -1,5 +1,6 @@
 #include "PathFinding/Lista.h"
 #include "PathFinding/Nodo.h"
+#include "cocostudio/CocoStudio.h"
 #include <iostream>
 
 Lista::Lista() {
@@ -44,10 +45,9 @@ void Lista::imprimirListaAdyacentes() {
 void Lista::imprimirLista() {
 	Nodo* temp = getHead();
 	while (temp != NULL) {
-		std::cout << "  Nodo: " << temp->getNumero() << " : ";
+		CCLOG("Nodo: %i", temp->getNumero());
 		temp = temp->getNextNodo();
 	}
-	std::cout << std::endl;
 }
 Nodo *Lista::buscaNumero(int i) {
 	Nodo* temp = getHead();

@@ -95,13 +95,14 @@ void GameScene::initNodes(b2Vec2 pos, b2Vec2 tam, int name, std::string adds)
 	char* chr = strdup(adds.c_str());
 	token = strtok(chr, ",");
 
+	CCLOG("Nodo Creado: %i", nodo->getNumero());
+
 	while (token != NULL) {
 		int i = atoi(token);
+		CCLOG("Adyacente: %i", i);
 		nodo->addAdyacente(i);
 		token = strtok(NULL, ",");
 	}
-
-	CCLOG("Nodo Creado: %i", nodo->getNumero());
 
 	nodos.push_back(nodo);
 }

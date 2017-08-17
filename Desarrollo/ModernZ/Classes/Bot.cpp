@@ -40,7 +40,6 @@ Nodo* Bot::getCercanoTotal(float x, float y) {
 
 void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 {
-	CCLOG("<<<<<<<<<EMPIEZA PATHFINDING>>>>>>>>>");
 	Nodo* aux;
 	Nodo* nodoInicial = inicial;
 	Nodo* nodoDestino = objetivo;
@@ -70,8 +69,8 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 		listaAbierta.insertar(nodoActual);
 		while (listaAbierta.getTamanyo() > 0 && listaAbierta.buscaNodo2(nodoDestino->getPosicion().x, nodoDestino->getPosicion().y) == NULL) {
 
-			listaAbierta.imprimirLista();
-			CCLOG("NODO ACTUAL: %i", nodoActual->getNumero());
+			//listaAbierta.imprimirLista();
+			//CCLOG("NODO ACTUAL: %i", nodoActual->getNumero());
 
 			nodoActual = listaAbierta.getMenorCosto();
 			listaAbierta.remove(nodoActual->getPosicion());
@@ -83,6 +82,7 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 				if (listaCerrada.buscaNumero(buscaNumero(nodoActual->getNumero())->getAdyacentes()[i]) == NULL
 					&& listaAbierta.buscaNumero(buscaNumero(nodoActual->getNumero())->getAdyacentes()[i]) == NULL) {
 					int numero = buscaNumero(nodoActual->getNumero())->getAdyacentes()[i];
+					//CCLOG("Adyacente(%i): %i", i, numero);
 					b2Vec2 posicion;
 					posicion.x = buscaNumero(numero)->getPosicion().x;
 					posicion.y = buscaNumero(numero)->getPosicion().y;
@@ -94,13 +94,14 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 		}
 		nodoActual = listaAbierta.buscaNodo2(nodoDestino->getPosicion().x, nodoDestino->getPosicion().y);
 		pathfinding = new Lista();
+		//CCLOG("<<<<<<<<<LISTA>>>>>>>>>");
 		while (nodoActual != NULL) {
+			//CCLOG("Nodo---> %i", nodoActual->getNumero());
 			pathfinding->insertar(nodoActual);
 			nodoActual = nodoActual->getPadre();
 		}
 		CCLOG("<<<<<<<<<PATHFINDING>>>>>>>>>");
 		nodoFinIni = pathfinding->getHead();
 		pathfinding->imprimirLista();
-		//std::cout<<std::endl;
 	}
 }
