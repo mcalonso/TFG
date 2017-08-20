@@ -31,6 +31,7 @@ public:
 	void initNodes(b2Vec2 pos, b2Vec2 tam, int name, std::string type);
 
 	Player* getPlayer() { return curretPlayer; }
+	Player* getOtherPlayer() { return otherPlayer; }
 	std::vector<GameObject*>* getObjects() { return &objects; }
 	std::vector<Nodo*>* getNodos() { return &nodos; }
 
@@ -42,6 +43,7 @@ private:
 	Player *ignatius;
 	Player *nereita;
 	Player *curretPlayer;
+	Player *otherPlayer;
 	b2World* world;
 	MyContactListener* contactListener;
 

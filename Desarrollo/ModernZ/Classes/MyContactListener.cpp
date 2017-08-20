@@ -20,6 +20,10 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 		((B == DATA_PLAYER_SENSOR1 || B == DATA_PLAYER_SENSOR2) && (A == DATA_PLATFORM || A == DATA_PLAYER || A == DATA_DESTROYABLE)))
 	{
 		contactScene->getPlayer()->setJumping(false);
+		contactScene->getOtherPlayer()->setJumping(false);
+
+		if(contact->GetFixtureA()->GetBody() == contactScene->getOtherPlayer()->getBody() || contact->GetFixtureB()->GetBody() == contactScene->getOtherPlayer()->getBody())
+			contactScene->getOtherPlayer()->stopPlayer();
 	}
 
 	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_VOID)) ||
@@ -55,7 +59,7 @@ void MyContactListener::EndContact(b2Contact* contact) {
 	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_PLATFORM || B == DATA_PLAYER)) ||
 		((B == DATA_PLAYER_SENSOR1 || B == DATA_PLAYER_SENSOR2) && (A == DATA_PLATFORM || A == DATA_PLAYER)))
 	{
-		if(contactScene->getPlayer()->getTypePlayer() == 2) contactScene->getPlayer()->setJumping(false);
+		//contactScene->getPlayer()->setJumping(false);
 	}
 
 	if (((A == DATA_PLAYER_SENSOR1 || A == DATA_PLAYER_SENSOR2) && (B == DATA_VOID)) ||

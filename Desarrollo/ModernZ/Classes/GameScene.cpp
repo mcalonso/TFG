@@ -42,6 +42,9 @@ bool GameScene::init()
 	initWorld();
 	map = new MapGame(this, world);
 	curretPlayer = ignatius;
+	otherPlayer = nereita;
+
+	//Init Bots actions
 
 	//Define Game Events
 	auto _listener = EventListenerKeyboard::create();
@@ -62,8 +65,8 @@ void GameScene::initWorld()
 	gravity.Set(0.0f, -20.0f);
 	world = new b2World(gravity);
 
-	//world->SetAllowSleeping(true);
-	//world->SetContinuousPhysics(true);
+	world->SetAllowSleeping(false);
+	world->SetContinuousPhysics(false);
 
 	contactListener = new MyContactListener(this);
 	world->SetContactListener(contactListener);
@@ -72,7 +75,7 @@ void GameScene::initWorld()
 void GameScene::initPlayers(b2Vec2 pos, int type)
 {
 	if(type == 1)	ignatius = new Player(this, type, pos, world);
-	else				nereita = new Player(this, type, pos, world);
+	else			nereita = new Player(this, type, pos, world);
 }
 
 void GameScene::initBots(b2Vec2 pos, int type)
@@ -118,7 +121,8 @@ void GameScene::updateWorld(float dt)
 	{
 		objects.at(i)->updateGameObject();;
 	}
-	//obj->updateGameObject();
+
+	//zombi1->mover();
 
 	world->DrawDebugData();
 	world->ClearForces();
@@ -164,18 +168,27 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		curretPlayer->move(1);
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_P) {
-		if (curretPlayer == ignatius) { curretPlayer = nereita; }
-		else { curretPlayer = ignatius; }
+
+		if (!curretPlayer->getJumping()) { 
+			curretPlayer->stopPlayer(); 
+		}
+
+		if (curretPlayer == ignatius) { curretPlayer = nereita; otherPlayer = ignatius; }
+		else { curretPlayer = ignatius; otherPlayer = nereita; }
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
-		Nodo* inicial = zombi1->getCercanoTotal(zombi1->getPosition().x, zombi1->getPosition().y);
+		/*Nodo* inicial = zombi1->getCercanoTotal(zombi1->getPosition().x, zombi1->getPosition().y);
 		Nodo* final = zombi1->getCercanoTotal(curretPlayer->getPosition().x, curretPlayer->getPosition().y);
 
 		CCLOG("Nodo mas cercano al zombi: %i", inicial->getNumero());
 		CCLOG("Nodo mas cercano al jugador: %i", final->getNumero());
 
-		zombi1->calcularPathfinding(inicial, final);
+		zombi1->calcularPathfinding(inicial, final);*/
 	}
+	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_J) {
+		zombi1->mover();
+	}
+
 
 	return true;
 }
@@ -183,6 +196,8 @@ bool GameScene::onKeyReleasedBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d
 {
 	if (code != cocos2d::EventKeyboard::KeyCode::KEY_SPACE)
 		curretPlayer->stopPlayer();
+
+	
 
 	return true;
 }

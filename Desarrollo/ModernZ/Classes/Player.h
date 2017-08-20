@@ -17,7 +17,10 @@ public:
 	void initFixture(b2Vec2 tam);
 
 	int getTypePlayer() { return typePlayer; }
+	b2Body* getBody() { return m_pBody; }
 	b2Vec2 getPosition() { return m_pBody->GetPosition(); }
+	bool getJumping() { return jumping; }
+	cocos2d::Sprite* getSprite() { return spritePlayer; }
 	void setJumping(bool j) { jumping = j; }
 
 private:

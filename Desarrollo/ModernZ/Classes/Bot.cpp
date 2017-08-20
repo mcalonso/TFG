@@ -11,6 +11,46 @@ Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<No
 
 	//_world = w;
 	nodos = nodosMap;
+
+	nodox = 0;
+	nodoy = 0; 
+	estadoBot = 0;
+	t = clock();
+}
+
+void Bot::updatePlayer() {
+
+	CCLOG("Tiempo %d", clock() - t);
+
+	this->getSprite()->setPosition(Vec2(this->getBody()->GetPosition().x * PPM, this->getBody()->GetPosition().y * PPM));
+
+	switch (estadoBot)
+	{
+	case 0:
+		mover();
+	break;
+		default:
+		break;
+	}
+
+}
+
+void Bot::mover() {
+
+
+
+	if (this->getPosition().x > nodox) dirBot = -1;
+	else dirBot = 1;
+
+	if (estadoBot != 0) {
+		this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
+	}
+}
+
+void Bot::siguienteNodo() {
+
+
+
 }
 
 Nodo* Bot::buscaNumero(int num) {
