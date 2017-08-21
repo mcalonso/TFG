@@ -18,6 +18,7 @@ public:
 	virtual void calcularPathfinding(Nodo* inicial, Nodo* objetivo);
 	void imprimirNodos();
 	void mover();
+	void patrullar();
 	void siguienteNodo();
 	Nodo* getCercanoTotal(float x, float y);
 	Nodo* buscaNumero(int i);

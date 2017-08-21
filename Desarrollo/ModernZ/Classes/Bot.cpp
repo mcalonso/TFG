@@ -14,13 +14,13 @@ Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<No
 
 	nodox = 0;
 	nodoy = 0; 
-	estadoBot = 0;
+	estadoBot = 1;
 	t = clock();
 }
 
 void Bot::updatePlayer() {
 
-	CCLOG("Tiempo %d", clock() - t);
+	//CCLOG("Tiempo %d", clock() - t);
 
 	this->getSprite()->setPosition(Vec2(this->getBody()->GetPosition().x * PPM, this->getBody()->GetPosition().y * PPM));
 
@@ -28,6 +28,9 @@ void Bot::updatePlayer() {
 	{
 	case 0:
 		mover();
+	break;
+	case 1:
+		patrullar();
 	break;
 		default:
 		break;
@@ -37,14 +40,20 @@ void Bot::updatePlayer() {
 
 void Bot::mover() {
 
-
-
 	if (this->getPosition().x > nodox) dirBot = -1;
 	else dirBot = 1;
 
-	if (estadoBot != 0) {
-		this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
-	}
+	this->stopPlayer();
+	this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
+}
+
+void Bot::patrullar() {
+
+	if (clock() - t > 3000) { dirBot*-1; t = clock(); }
+
+	CCLOG("Tiempo %d", clock() - t);
+	this->stopPlayer();
+	this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
 }
 
 void Bot::siguienteNodo() {
