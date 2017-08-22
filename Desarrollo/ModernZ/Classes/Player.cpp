@@ -19,8 +19,8 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 	else { 	spritePlayer = Sprite::create("player/playerS.png"); }
 
 	spritePlayer->setPosition(pos.x, pos.y);
-	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(10 * MPP, 10 * MPP));
-	initFixture(b2Vec2(10 * MPP, 10 * MPP));
+	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(72 * MPP, 94 * MPP));
+	initFixture(b2Vec2(72 * MPP, 94 * MPP));
 	m_pBody->SetTransform(b2Vec2(pos.x * MPP, pos.y * MPP), m_pBody->GetAngle());
 
 	spritePlayer->setScale(0.2f);
@@ -33,7 +33,7 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 void Player::updatePlayer()
 {
-	spritePlayer->setPosition(Vec2(m_pBody->GetPosition().x * PPM, m_pBody->GetPosition().y * PPM));
+	spritePlayer->setPosition(Vec2(m_pBody->GetPosition().x * PPM, (m_pBody->GetPosition().y * PPM)+35));
 }
 
 void Player::jump(int dir) {

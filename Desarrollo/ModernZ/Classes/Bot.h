@@ -15,38 +15,40 @@ class Bot: public Player
 {
 public:
 	Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodos);
-	virtual void calcularPathfinding(Nodo* inicial, Nodo* objetivo);
-	void imprimirNodos();
-	void mover();
-	void patrullar();
-	void siguienteNodo();
-	Nodo* getCercanoTotal(float x, float y);
-	Nodo* buscaNumero(int i);
+	virtual void generatePathfinding(Nodo* inicial, Nodo* objetivo);
+	void printNodes();
+	void move();
+	void patrol();
+	void nextNode();
+	void quietFor();
+	Nodo* getNearNode(float x, float y);
+	Nodo* findNumber(int i);
 	void updatePlayer();
 
 
 private:
 
 	Nodo* aux;
-	Nodo *nodoInicial;
-	Nodo* nodoDestino;
-	Nodo* nodoActual;
+	Nodo *startingNode;
+	Nodo* destinationNode;
+	Nodo* currentNode;
 	Nodo* nodoFinIni;
-	Lista *lista;
+	Lista *list;
 	Lista *spawn;
 	Lista* pathfinding;
 
 	//estado = 0 --> quieto
 	//estado = 1 --> patrullando
 	//estado = 2 --> buscando player
-	int estadoBot;
+	int stateBot;
 	int dirBot;
 	int lastDir;
 	float nodox;
 	float nodoy;
+	int velBot;
 
 	b2Vec2 findPlayer;
-	std::vector<Nodo*>* nodos;
+	std::vector<Nodo*>* nodes;
 
 	clock_t t;
 };

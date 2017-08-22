@@ -177,16 +177,16 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		else { curretPlayer = ignatius; otherPlayer = nereita; }
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_O) {
-		/*Nodo* inicial = zombi1->getCercanoTotal(zombi1->getPosition().x, zombi1->getPosition().y);
-		Nodo* final = zombi1->getCercanoTotal(curretPlayer->getPosition().x, curretPlayer->getPosition().y);
+		Nodo* inicial = zombi1->getNearNode(zombi1->getPosition().x, zombi1->getPosition().y);
+		Nodo* final = zombi1->getNearNode(curretPlayer->getPosition().x, curretPlayer->getPosition().y);
 
 		CCLOG("Nodo mas cercano al zombi: %i", inicial->getNumero());
 		CCLOG("Nodo mas cercano al jugador: %i", final->getNumero());
 
-		zombi1->calcularPathfinding(inicial, final);*/
+		zombi1->generatePathfinding(inicial, final);
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_J) {
-		zombi1->mover();
+		zombi1->move();
 	}
 
 

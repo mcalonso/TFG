@@ -14,7 +14,7 @@
 #define PPM 32.0f               //PIXELS POR METRO
 #define MPP (1.0f/PPM)          //METROS POR PIXEL
 
-//Define player
+//Define player and bot
 #define velPlayer 15
 #define jumpForce 30
 

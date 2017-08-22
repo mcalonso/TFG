@@ -15013,7 +15013,7 @@
   </data>
  </layer>
  <objectgroup name="bots">
-  <object id="430" name="0" gid="402" x="3008" y="1008" width="16" height="16"/>
+  <object id="430" name="0" gid="402" x="1232" y="1136" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="nodos">
   <object id="489" name="22" type="15,16" gid="126" x="688" y="1040" width="16" height="16"/>

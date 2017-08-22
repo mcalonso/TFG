@@ -10,27 +10,33 @@ USING_NS_CC;
 Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodosMap):Player(layer, type, pos, w){
 
 	//_world = w;
-	nodos = nodosMap;
+	nodes = nodosMap;
 
+	currentNode = NULL;
 	nodox = 0;
 	nodoy = 0; 
-	estadoBot = 1;
+	stateBot = 1;
+	dirBot = 1;
+	velBot = 5;
+
 	t = clock();
 }
 
 void Bot::updatePlayer() {
 
-	//CCLOG("Tiempo %d", clock() - t);
-
 	this->getSprite()->setPosition(Vec2(this->getBody()->GetPosition().x * PPM, this->getBody()->GetPosition().y * PPM));
 
-	switch (estadoBot)
+
+	switch (stateBot)
 	{
 	case 0:
-		mover();
+		quietFor();
 	break;
 	case 1:
-		patrullar();
+		patrol();
+	break;
+	case 2:
+		move();
 	break;
 		default:
 		break;
@@ -38,56 +44,72 @@ void Bot::updatePlayer() {
 
 }
 
-void Bot::mover() {
+void Bot::move() {
+
+	if (currentNode == NULL) {
+		nextNode();
+	}
 
 	if (this->getPosition().x > nodox) dirBot = -1;
 	else dirBot = 1;
 
 	this->stopPlayer();
-	this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
+	if (abs(this->getPosition().x) > abs(nodox - 10) && abs(this->getPosition().x) < abs(nodox + 10)) {
+		nextNode();
+	}
+	this->getBody()->ApplyLinearImpulse(b2Vec2(velBot*dirBot, 0), this->getBody()->GetWorldCenter(), true);
 }
 
-void Bot::patrullar() {
+void Bot::patrol() {
 
-	if (clock() - t > 3000) { dirBot*-1; t = clock(); }
+	if (clock() - t > 3000) {
+		dirBot*=-1; 
+		t = clock();
+		quietFor();
+	}
 
-	CCLOG("Tiempo %d", clock() - t);
 	this->stopPlayer();
-	this->getBody()->ApplyLinearImpulse(b2Vec2(velPlayer*dirBot, 0), this->getBody()->GetWorldCenter(), true);
+	this->getBody()->ApplyLinearImpulse(b2Vec2(velBot*dirBot, 0), this->getBody()->GetWorldCenter(), true);
 }
 
-void Bot::siguienteNodo() {
+void Bot::nextNode() {
 
-
-
+	currentNode = pathfinding->getUltimo();
+	nodox = currentNode->getPosicion().x;
+	nodoy = currentNode->getPosicion().y;
 }
 
-Nodo* Bot::buscaNumero(int num) {
+void Bot::quietFor() {
+	if (stateBot != 0){	stateBot = 0; t = clock(); }
+	this->stopPlayer();
+	if (clock() - t > 1000) { stateBot = 1; t = clock(); }
+}
+
+Nodo* Bot::findNumber(int num) {
 	Nodo *aux = NULL;
 
-	for (int i = 0; i< nodos->size(); i++) {
-		if (nodos->at(i)->getNumero() == num) return nodos->at(i);
+	for (int i = 0; i< nodes->size(); i++) {
+		if (nodes->at(i)->getNumero() == num) return nodes->at(i);
 	}
 	return aux;
 }
 
-Nodo* Bot::getCercanoTotal(float x, float y) {
+Nodo* Bot::getNearNode(float x, float y) {
 
 	Nodo *aux = NULL;
 	float dif = 100000;
 
-
-	for (int i = 0; i< nodos->size(); i++) {
-		float coste = abs(nodos->at(i)->getPosicion().y*MPP - y) + abs(nodos->at(i)->getPosicion().x*MPP - x);
+	for (int i = 0; i< nodes->size(); i++) {
+		float coste = abs(nodes->at(i)->getPosicion().y*MPP - y) + abs(nodes->at(i)->getPosicion().x*MPP - x);
 		if (coste<dif) {
 			dif = coste;
-			aux = nodos->at(i);
+			aux = nodes->at(i);
 		}
 	}
 	return aux;
 }
 
-void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
+void Bot::generatePathfinding(Nodo* inicial, Nodo* objetivo)
 {
 	Nodo* aux;
 	Nodo* nodoInicial = inicial;
@@ -126,15 +148,15 @@ void Bot::calcularPathfinding(Nodo* inicial, Nodo* objetivo)
 
 			nodoActual->setNext(NULL);
 			listaCerrada.insertar(nodoActual);
-			for (int i = 0; i<buscaNumero(nodoActual->getNumero())->getAdyacentes().size(); i++) {
+			for (int i = 0; i<findNumber(nodoActual->getNumero())->getAdyacentes().size(); i++) {
 
-				if (listaCerrada.buscaNumero(buscaNumero(nodoActual->getNumero())->getAdyacentes()[i]) == NULL
-					&& listaAbierta.buscaNumero(buscaNumero(nodoActual->getNumero())->getAdyacentes()[i]) == NULL) {
-					int numero = buscaNumero(nodoActual->getNumero())->getAdyacentes()[i];
+				if (listaCerrada.buscaNumero(findNumber(nodoActual->getNumero())->getAdyacentes()[i]) == NULL
+					&& listaAbierta.buscaNumero(findNumber(nodoActual->getNumero())->getAdyacentes()[i]) == NULL) {
+					int numero = findNumber(nodoActual->getNumero())->getAdyacentes()[i];
 					//CCLOG("Adyacente(%i): %i", i, numero);
 					b2Vec2 posicion;
-					posicion.x = buscaNumero(numero)->getPosicion().x;
-					posicion.y = buscaNumero(numero)->getPosicion().y;
+					posicion.x = findNumber(numero)->getPosicion().x;
+					posicion.y = findNumber(numero)->getPosicion().y;
 					int coste = abs(posicion.x - nodoDestino->getPosicion().x) + abs(posicion.y - nodoDestino->getPosicion().y);
 					Nodo* aux = new Nodo(posicion, b2Vec2(1,1), numero, coste, nodoActual);
 					listaAbierta.insertar(aux);
