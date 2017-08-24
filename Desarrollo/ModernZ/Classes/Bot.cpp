@@ -41,7 +41,6 @@ void Bot::updatePlayer() {
 		default:
 		break;
 	}
-
 }
 
 void Bot::move() {

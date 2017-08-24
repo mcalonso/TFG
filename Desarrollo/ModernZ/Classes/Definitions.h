@@ -15,8 +15,8 @@
 #define MPP (1.0f/PPM)          //METROS POR PIXEL
 
 //Define player and bot
-#define velPlayer 15
-#define jumpForce 30
+#define velPlayer 200
+#define jumpForce 350
 
 //Define user data body
 #define DATA_PLATFORM				1
