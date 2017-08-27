@@ -17,7 +17,7 @@ Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<No
 	nodoy = 0; 
 	stateBot = 1;
 	dirBot = 1;
-	velBot = 5;
+	velBot = 200;
 
 	t = clock();
 }

@@ -21,7 +21,8 @@ public:
 	b2Vec2 getPosition() { return m_pBody->GetPosition(); }
 	bool getJumping() { return jumping; }
 	cocos2d::Sprite* getSprite() { return spritePlayer; }
-	void setJumping(bool j) { jumping = j; }
+	void setJumping(bool j);
+	void setAction(int type);
 
 private:
 	cocos2d::Size visibleSize;
@@ -34,6 +35,21 @@ private:
 	b2Body* m_pBody;
 	b2World* _world;
 
+	cocos2d::Animate *walkAnimate;
+	cocos2d::Animation *walkAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> walkFrames;
+
+	cocos2d::Animate *stopAnimate;
+	cocos2d::Animation *stopAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> stopFrames;
+
+	cocos2d::Animate *jumpUpAnimate;
+	cocos2d::Animation *jumpUpAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> jumpUpFrames;
+
+	cocos2d::Animate *jumpDownAnimate;
+	cocos2d::Animation *jumpDownAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> jumpDownFrames;
 
 };
 

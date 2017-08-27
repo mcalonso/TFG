@@ -56,6 +56,11 @@ bool GameScene::init()
 	this->schedule(schedule_selector(GameScene::update), 0.5f);
 	this->schedule(CC_SCHEDULE_SELECTOR(GameScene::updateWorld));
 
+	//AUDIO
+	audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->setBackgroundMusicVolume(0.1f);
+	audio->playBackgroundMusic("sound/backGroundMap1.wav", true);
+
     return true;
 }
 

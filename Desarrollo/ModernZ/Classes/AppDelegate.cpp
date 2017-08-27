@@ -41,6 +41,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     FileUtils::getInstance()->addSearchPath("res");
+	//PRECARGA DE LOS SPRITES
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("player/PlayerWalk/IgnatiusWalk.plist", "player/PlayerWalk/IgnatiusWalk.png");
 
     // create a scene. it's an autorelease object
     auto scene = SplashScene::createScene();

@@ -15,42 +15,116 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 	typePlayer = type;
 
-	if (type == 1) {spritePlayer = Sprite::create("player/PlayerWalk/playerOriginal2.png"); }
-	else { spritePlayer = Sprite::create("player/playerS.png"); }
+	if (type == 1) {
 
-	CCSpriteFrameCache* frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	frameCache->addSpriteFramesWithFile("player/PlayerWalk/IgnatiusWalk.plist");
+		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Ignatius);
 
-	CCSpriteBatchNode* spritesheet = CCSpriteBatchNode::create("player/PlayerWalk/IgnatiusWalk.png");
-	layer->addChild(spritesheet);
+		////////////////////////////////////////////////////////////////////////////////
 
-	Vector<SpriteFrame*> ignatiusWalkFrames;
-	ignatiusWalkFrames.reserve(6);
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal1.png", Rect(0, 0, 360, 469)));
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal2.png", Rect(0, 0, 360, 469)));
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal3.png", Rect(0, 0, 360, 469)));
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal4.png", Rect(0, 0, 360, 469)));
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal5.png", Rect(0, 0, 360, 469)));
-	ignatiusWalkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal6.png", Rect(0, 0, 360, 469)));
+		// now lets animate the sprite we moved
+		walkFrames.reserve(6);
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal1.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal2.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal3.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal4.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal5.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal6.png", Rect(0, 0, 360, 469)));
 
-	// create the animation out of the frames
-	CCAnimation* animation = Animation::createWithSpriteFrames(ignatiusWalkFrames, 0.2f);
-	CCAction* animate = CCRepeatForever::create(CCAnimate::create(animation));
+		// create the animation out of the frames
+		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.1f);
+		walkAnimate = Animate::create(walkAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		stopFrames.reserve(1);
+		stopFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerOriginal1.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
+		stopAnimate = Animate::create(stopAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpUpFrames.reserve(1);
+		jumpUpFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando1.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
+		jumpUpAnimate = Animate::create(jumpUpAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpDownFrames.reserve(1);
+		jumpDownFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando2.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
+		jumpDownAnimate = Animate::create(jumpDownAnimation);
+
+
+		////////////////////////////////////////////////////////////////////////////////
+	}
+	else { 
+		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Nereita);
+
+		////////////////////////////////////////////////////////////////////////////////
+
+		// now lets animate the sprite we moved
+		walkFrames.reserve(10);
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk0.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk1.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk2.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk3.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk4.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk5.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk6.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk7.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk8.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk9.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.1f);
+		walkAnimate = Animate::create(walkAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		stopFrames.reserve(1);
+		stopFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlStop.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
+		stopAnimate = Animate::create(stopAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpUpFrames.reserve(1);
+		jumpUpFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando1.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
+		jumpUpAnimate = Animate::create(jumpUpAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpDownFrames.reserve(1);
+		jumpDownFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando2.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
+		jumpDownAnimate = Animate::create(jumpDownAnimation);
+
+
+		////////////////////////////////////////////////////////////////////////////////
+	}
+
 	// run it and repeat it forever
-	CCSprite* ignatiusWalk;
-	sprite->runAction(RepeatForever::create(animate));
-
-	/*CCAnimation* runAnim = CCAnimation::createWithSpriteFrames(ignatiusWalkFrames, 0.1);
-	CCSprite* ignatiusWalk = CCSprite::createWithSpriteFrameName("player/PlayerWalk/playerOriginal1.png");
-
-	ignatiusWalk->setPosition(pos.x, pos.y);
-
-	CCAction* action = CCRepeatForever::create(CCAnimate::create(runAnim));
-
-	ignatiusWalk->runAction(action);
-	spritesheet->addChild(ignatiusWalk);*/
-
-
+	spritePlayer->runAction(stopAnimate);
 	spritePlayer->setPosition(pos.x, pos.y);
 	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(35 * MPP, 42 * MPP));
 	initFixture(b2Vec2(35 * MPP, 42 * MPP));
@@ -61,26 +135,47 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 	jumping = false;
 
 	layer->addChild(spritePlayer);
-
-	/*this->sprite = Sprite::createWithSpriteFrameName(MONEDA1);
-		// now lets animate the sprite we moved
-		Vector<SpriteFrame*> animFrames;
-		animFrames.reserve(3);
-		animFrames.pushBack(SpriteFrame::create("Sprites/moneda1.png", Rect(0, 0, 64, 64)));
-		animFrames.pushBack(SpriteFrame::create("Sprites/moneda2.png", Rect(0, 0, 8, 64)));
-		animFrames.pushBack(SpriteFrame::create("Sprites/moneda3.png", Rect(0, 0, 64, 64)));
-		
-
-		// create the animation out of the frames
-		animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-		animate = Animate::create(animation);
-		// run it and repeat it forever
-		sprite->runAction(RepeatForever::create(animate));*/
 }
 
 void Player::updatePlayer()
 {
 	spritePlayer->setPosition(Vec2(m_pBody->GetPosition().x * PPM, (m_pBody->GetPosition().y * PPM)));
+
+	if (jumping) {
+		if (m_pBody->GetLinearVelocity().y < 0) { setAction(3); }
+	}
+}
+
+void Player::setAction(int type) {
+
+	spritePlayer->stopAllActions();
+
+	if (type == 0) {
+		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 10.1f);
+		stopAnimate = Animate::create(stopAnimation);
+		spritePlayer->runAction(RepeatForever::create(stopAnimate));
+	}
+	else if (type == 1) {
+		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.1f);
+		walkAnimate = Animate::create(walkAnimation);
+		spritePlayer->runAction(RepeatForever::create(walkAnimate));
+	}
+	else if (type == 2) {
+		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
+		jumpUpAnimate = Animate::create(jumpUpAnimation);
+		spritePlayer->runAction(RepeatForever::create(jumpUpAnimate));
+	}
+	else if (type == 3) {
+		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
+		jumpDownAnimate = Animate::create(jumpDownAnimation);
+		spritePlayer->runAction(RepeatForever::create(jumpDownAnimate));
+	}
+}
+
+void Player::setJumping(bool j) {
+
+	jumping = j;
+	setAction(0);
 }
 
 void Player::jump(int dir) {
@@ -89,6 +184,7 @@ void Player::jump(int dir) {
 	{
 		m_pBody->ApplyLinearImpulse(b2Vec2(m_pBody->GetLinearVelocity().x, jumpForce), m_pBody->GetWorldCenter(), true);
 		jumping = true;
+		setAction(2);
 	}
 }
 
@@ -96,11 +192,18 @@ void Player::move(int d) {
 
 	dir = d;
 	m_pBody->ApplyLinearImpulse(b2Vec2(velPlayer*dir, 0), m_pBody->GetWorldCenter(), true);
+
+	if (dir == -1) { spritePlayer->setRotationY(180);}
+	else spritePlayer->setRotationY(360);
+
+	if (!jumping) setAction(1);
 }
 
 void Player::stopPlayer() {
 
 	m_pBody->SetLinearVelocity(b2Vec2(0, m_pBody->GetLinearVelocity().y));
+	
+	if (!jumping) setAction(0);
 }
 
 void Player::initBody(b2Vec2 pos, b2Vec2 tam) {
@@ -116,7 +219,7 @@ void Player::initFixture(b2Vec2 tam) {
 	b2PolygonShape polyShape;
 	polyShape.SetAsBox((tam.x), (tam.y));
 	fixtureDef.shape = &polyShape;
-	fixtureDef.friction = 50;
+	fixtureDef.friction = 0;
 	fixtureDef.restitution = 0;
 	fixtureDef.density = 5;
 	b2Fixture* fixture = m_pBody->CreateFixture(&fixtureDef);

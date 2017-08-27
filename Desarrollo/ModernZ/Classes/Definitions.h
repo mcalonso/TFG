@@ -3,8 +3,10 @@
 
 //Define times transition scenes
 #define DISPLAY_TIME_SPLASH_SCENE	1
+#define DISPLAY_TIME_SPLASH_MENU	2
 #define DISPLAY_TIME_SPLASH_SCENEV	2
 #define TRANSITION_TIME				0.5
+#define TRANSITION_TIME_MENU		0.5
 
 //Define step world
 #define VELOCITY_ITINERATIONS		8   //how strongly to correct velocity
@@ -17,6 +19,10 @@
 //Define player and bot
 #define velPlayer 200
 #define jumpForce 350
+
+//Define Sprites
+#define Sprite_Ignatius "playerOriginal1.png"
+#define Sprite_Nereita "girlStop.png"
 
 //Define user data body
 #define DATA_PLATFORM				1

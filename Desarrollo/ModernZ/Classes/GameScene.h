@@ -8,6 +8,7 @@
 #include "Bot.h"
 #include "GameObject.h"
 #include "MyContactListener.h"
+#include "SimpleAudioEngine.h"
 #include <string>
 
 class GameScene : public cocos2d::Layer
@@ -49,6 +50,8 @@ private:
 
 	Bot *zombi1;
 	Nodo *nodo;
+
+	CocosDenshion::SimpleAudioEngine* audio;
 
 	std::vector<GameObject*> objects;
 	std::vector<Nodo*> nodos;

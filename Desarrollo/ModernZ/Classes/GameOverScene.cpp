@@ -47,7 +47,7 @@ bool GameOverScene::init()
 	this->addChild(backgroundSprite);
 
 	MenuItemImage *buttonRetry = MenuItemImage::create("menu/retry.png", "menu/retrySelec.png", CC_CALLBACK_1(GameOverScene::returnMainMemu, this));
-	MenuItemImage *buttonQuit = MenuItemImage::create("menu/quit.png", "menu/quitSelec.png", CC_CALLBACK_1(GameOverScene::exitGame, this));
+	MenuItemImage *buttonQuit = MenuItemImage::create("menu/exit.png", "menu/exit.png", CC_CALLBACK_1(GameOverScene::exitGame, this));
 
 	Menu* mainMenu = Menu::create(buttonRetry, buttonQuit, NULL);
 	mainMenu->alignItemsVertically();

@@ -15,7 +15,7 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 	visibleSize = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
 
-	backgroundSprite = Sprite::create("maps/backgroundMap11.jpg");
+	backgroundSprite = Sprite::create("maps/backgroundMap.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	scene->addChild(backgroundSprite);
 

@@ -2,6 +2,9 @@
 #define __MAINMENU_SCENE_H__
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
+#include <time.h>
+
 
 class MainMenuScene : public cocos2d::Layer
 {
@@ -16,7 +19,14 @@ public:
     CREATE_FUNC(MainMenuScene);
 
 	void playGameScene(cocos2d::Ref *sender);
+	void updateTitle(float dt);
 
+	CocosDenshion::SimpleAudioEngine* audio;
+	clock_t t;
+	cocos2d::Sprite* titleSprite;
+
+	cocos2d::Size visibleSize;
+	cocos2d::Vec2 origin;
 };
 
 #endif // __MAINMENU_SCENE_H__

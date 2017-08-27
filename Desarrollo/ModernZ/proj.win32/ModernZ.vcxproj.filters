@@ -54,10 +54,7 @@
     <ClCompile Include="..\Classes\Bot.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ZStalker.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ZRunner.cpp">
+    <ClCompile Include="..\Classes\SplashScenemenu.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,10 +104,7 @@
     <ClInclude Include="..\Classes\Bot.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ZRunner.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ZStalker.h">
+    <ClInclude Include="..\Classes\SplashScenemenu.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
