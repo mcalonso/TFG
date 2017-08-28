@@ -7,11 +7,11 @@
 
 USING_NS_CC;
 
-Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodosMap):Player(layer, type, pos, w){
+Bot::Bot(cocos2d::Layer *layer, int tZ, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodosMap):Player(layer, type, pos, w){
 
 	//_world = w;
 	nodes = nodosMap;
-
+	typeZ = tZ;
 	currentNode = NULL;
 	nodox = 0;
 	nodoy = 0; 
@@ -20,62 +20,49 @@ Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<No
 	velBot = 200;
 
 	t = clock();
-
-	//this->getSprite() = Sprite::createWithSpriteFrameName(Sprite_Zombi1);
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	// now lets animate the sprite we atack
-	atackFrames.reserve(10);
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack1.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack2.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack3.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack4.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack5.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack6.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack7.png", Rect(0, 0, 360, 469)));
-	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack8.png", Rect(0, 0, 360, 469)));
-
-	// create the animation out of the frames
-	atackAnimation = Animation::createWithSpriteFrames(atackFrames, 0.0f);
-	atackAnimate = Animate::create(atackAnimation);
-
-	/*********************************************************************************/
-
-	// now lets animate the sprite we moved
-	walkFrames.reserve(10);
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk1.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk2.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk3.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk4.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk5.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk6.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk7.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk8.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk9.png", Rect(0, 0, 360, 469)));
-	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk10.png", Rect(0, 0, 360, 469)));
-
-	// create the animation out of the frames
-	walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.0f);
-	walkAnimate = Animate::create(walkAnimation);
-
-	/*********************************************************************************/
-
-	// now lets animate the sprite we stop
-	stopFrames.reserve(1);
-	stopFrames.pushBack(SpriteFrame::create("player/Zombie1/zStop.png", Rect(0, 0, 360, 469)));
-
-	// create the animation out of the frames
-	stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
-	stopAnimate = Animate::create(stopAnimation);
-
-	////////////////////////////////////////////////////////////////////////////////
 }
 
-void Bot::updatePlayer() {
+void Bot::updatePlayer(Player* pl1, Player* pl2) {
 
 	this->getSprite()->setPosition(Vec2(this->getBody()->GetPosition().x * PPM, this->getBody()->GetPosition().y * PPM));
 
+	//set up input
+	b2RayCastInput input;
+	b2Vec2 p1 = this->getBody()->GetPosition();
+	b2Vec2 p2 = b2Vec2(this->getBody()->GetPosition().x + 500, this->getBody()->GetPosition().y);
+	input.p1 = p1;
+	input.p2 = p2;
+	input.maxFraction = 1;
+
+	//CCLOG("P2 (%i,%i)", p2.x, p2.y);
+
+
+	//check every fixture of every body to find closest
+	float closestFraction = 1; //start with end of line as p2
+
+	b2Vec2 intersectionNormal(0, 0);
+
+	b2RayCastOutput output;
+
+	for (b2Fixture* f = pl1->getBody()->GetFixtureList(); f; f = f->GetNext()) {
+		b2RayCastOutput output;
+		if (f->RayCast(&output, input, 0))
+
+			CCLOG("Esta golpeando");
+
+	}
+
+	b2Vec2 intersectionPoint = p1 + closestFraction * (p2 - p1);
+	int width = abs(intersectionPoint.x - p1.x);
+	int height = abs(intersectionPoint.y - p1.y);
+	float distance = sqrt(pow(width, 2) + pow(height, 2));
+
+	if (intersectionPoint.x - this->getBody()->GetPosition().x < 30 && intersectionPoint.y - this->getBody()->GetPosition().y < 10) {
+		//CCLOG("Te pilleeeeeeeeeeeeeeeeeeeeeeeeeeeee!");
+	}
+	else {
+		//CCLOG("No te veo");
+	}
 
 	switch (stateBot)
 	{
@@ -98,6 +85,8 @@ void Bot::move() {
 	if (dirBot == -1) { this->getSprite()->setRotationY(180); }
 	else this->getSprite()->setRotationY(360);
 
+	setAction(1);
+
 	if (currentNode == NULL) {
 		nextNode();
 	}
@@ -114,13 +103,19 @@ void Bot::move() {
 
 void Bot::patrol() {
 
+	if (dirBot == -1) { this->getSprite()->setRotationY(180); }
+	else this->getSprite()->setRotationY(360);
+
+	setAction(1);
+
 	if (clock() - t > 3000) {
+		this->stopPlayer();
 		dirBot*=-1; 
 		t = clock();
 		quietFor();
 	}
 
-	this->stopPlayer();
+	this->getBody()->SetLinearVelocity(b2Vec2(0, this->getBody()->GetLinearVelocity().y));
 	this->getBody()->ApplyLinearImpulse(b2Vec2(velBot*dirBot, 0), this->getBody()->GetWorldCenter(), true);
 }
 

@@ -154,12 +154,13 @@ MapGame::MapGame(GameScene *scene, b2World *w) {
 		x = properties["x"].asFloat();
 		y = properties["y"].asFloat();
 		type = properties["name"].asInt();
+		int typeZ = properties["type"].asInt();
 		tamh = properties["height"].asFloat();
 		tamw = properties["width"].asFloat();
 
 		CCLOG("Bot: %f %f %f %f %i", x, y, tamw, tamh, type);
 
-		scene->initBots(b2Vec2(x, y), type);
+		scene->initBots(b2Vec2(x, y), typeZ, type);
 	}
 
 	CCLOG("End load map");

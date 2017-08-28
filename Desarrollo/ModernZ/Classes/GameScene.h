@@ -27,12 +27,14 @@ public:
 	void updateWorld(float dt);
 	void initWorld();
 	void initPlayers(b2Vec2 pos, int type);
-	void initBots(b2Vec2 pos, int type);
+	void initBots(b2Vec2 pos, int typeZ, int type);
 	void initGameObjects(b2Vec2 pos, b2Vec2 tam);
 	void initNodes(b2Vec2 pos, b2Vec2 tam, int name, std::string type);
 
 	Player* getPlayer() { return curretPlayer; }
+	b2World* getWorld() { return world; }
 	Player* getOtherPlayer() { return otherPlayer; }
+
 	std::vector<GameObject*>* getObjects() { return &objects; }
 	std::vector<Nodo*>* getNodos() { return &nodos; }
 

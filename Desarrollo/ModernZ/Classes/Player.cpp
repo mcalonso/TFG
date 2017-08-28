@@ -74,7 +74,7 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 		initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(30 * MPP, 33 * MPP));
 		initFixture(b2Vec2(30 * MPP, 33 * MPP));
 	}
-	else { 
+	else if (type == 1) { 
 
 		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Ignatius);
 
@@ -123,6 +123,62 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
 		jumpDownAnimate = Animate::create(jumpDownAnimation);
 
+
+		////////////////////////////////////////////////////////////////////////////////
+
+		spritePlayer->setScale(0.2f);
+		initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(35 * MPP, 42 * MPP));
+		initFixture(b2Vec2(35 * MPP, 42 * MPP));
+	}
+	else {
+		
+		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Zombi1);
+
+		////////////////////////////////////////////////////////////////////////////////
+
+		// now lets animate the sprite we atack
+		atackFrames.reserve(6);
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack1.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack2.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack3.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack4.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack5.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack6.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack7.png", Rect(0, 0, 360, 469)));
+		atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack8.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		atackAnimation = Animation::createWithSpriteFrames(atackFrames, 0.1f);
+		atackAnimate = Animate::create(atackAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		walkFrames.reserve(10);
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk1.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk2.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk3.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk4.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk5.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk6.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk7.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk8.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk9.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk10.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.1f);
+		walkAnimate = Animate::create(walkAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we stop
+		stopFrames.reserve(1);
+		stopFrames.pushBack(SpriteFrame::create("player/Zombie1/zStop.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
+		stopAnimate = Animate::create(stopAnimation);
 
 		////////////////////////////////////////////////////////////////////////////////
 

@@ -83,9 +83,9 @@ void GameScene::initPlayers(b2Vec2 pos, int type)
 	else			nereita = new Player(this, type, pos, world);
 }
 
-void GameScene::initBots(b2Vec2 pos, int type)
+void GameScene::initBots(b2Vec2 pos, int typeZ, int type)
 {
-	if (type == 0)		zombi1 = new Bot(this, type, pos, world, &nodos);
+	if (type == 0)		zombi1 = new Bot(this, typeZ, type, pos, world, &nodos);
 }
 
 void GameScene::initGameObjects(b2Vec2 pos, b2Vec2 tam)
@@ -120,14 +120,13 @@ void GameScene::updateWorld(float dt)
 	world->Step(dt, VELOCITY_ITINERATIONS, POSITIONS_ITINERATIONS);
 	ignatius->updatePlayer();
 	nereita->updatePlayer();
-	zombi1->updatePlayer();
+	zombi1->updatePlayer(curretPlayer, otherPlayer);
 
 	for (unsigned int i = 0; i<objects.size(); i++)
 	{
 		objects.at(i)->updateGameObject();;
 	}
 
-	//zombi1->mover();
 
 	world->DrawDebugData();
 	world->ClearForces();
@@ -191,8 +190,11 @@ bool GameScene::onKeyPressBegan(cocos2d::EventKeyboard::KeyCode	code, cocos2d::E
 		zombi1->generatePathfinding(inicial, final);
 	}
 	else if (code == cocos2d::EventKeyboard::KeyCode::KEY_J) {
-		zombi1->move();
+
+		CCLOG("Player (%f,%f)", curretPlayer->getPosition().x, curretPlayer->getPosition().y);
+		CCLOG("Bot (%f,%f)", zombi1->getPosition().x, zombi1->getPosition().y);
 	}
+
 
 
 	return true;

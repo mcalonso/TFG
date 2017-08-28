@@ -40,6 +40,10 @@ public:
 	cocos2d::Animation *jumpDownAnimation;
 	cocos2d::Vector<cocos2d::SpriteFrame*> jumpDownFrames;
 
+	cocos2d::Animate *atackAnimate;
+	cocos2d::Animation *atackAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> atackFrames;
+
 private:
 	cocos2d::Sprite *spritePlayer;
 	cocos2d::Size visibleSize;

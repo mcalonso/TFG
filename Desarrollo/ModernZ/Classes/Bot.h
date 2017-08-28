@@ -14,7 +14,7 @@ class Lista;
 class Bot: public Player
 {
 public:
-	Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodos);
+	Bot(cocos2d::Layer *layer, int typeZ, int type, b2Vec2 pos, b2World* w, std::vector<Nodo*>* nodos);
 	virtual void generatePathfinding(Nodo* inicial, Nodo* objetivo);
 	void printNodes();
 	void move();
@@ -23,8 +23,7 @@ public:
 	void quietFor();
 	Nodo* getNearNode(float x, float y);
 	Nodo* findNumber(int i);
-	void updatePlayer();
-
+	void updatePlayer(Player* p1, Player* p2);
 
 private:
 
@@ -46,15 +45,12 @@ private:
 	float nodox;
 	float nodoy;
 	int velBot;
+	int typeZ;
 
 	b2Vec2 findPlayer;
 	std::vector<Nodo*>* nodes;
 
 	clock_t t;
-
-	cocos2d::Animate *atackAnimate;
-	cocos2d::Animation *atackAnimation;
-	cocos2d::Vector<cocos2d::SpriteFrame*> atackFrames;
 };
 
 #endif // __BOT_H__
