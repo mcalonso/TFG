@@ -23,6 +23,7 @@
 //Define Sprites
 #define Sprite_Ignatius "playerOriginal1.png"
 #define Sprite_Nereita "girlStop.png"
+#define Sprite_Zombi1 "zStop.png"
 
 //Define user data body
 #define DATA_PLATFORM				1

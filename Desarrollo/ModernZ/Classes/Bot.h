@@ -51,6 +51,10 @@ private:
 	std::vector<Nodo*>* nodes;
 
 	clock_t t;
+
+	cocos2d::Animate *atackAnimate;
+	cocos2d::Animation *atackAnimation;
+	cocos2d::Vector<cocos2d::SpriteFrame*> atackFrames;
 };
 
 #endif // __BOT_H__

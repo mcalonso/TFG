@@ -15,7 +15,66 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 	typePlayer = type;
 
-	if (type == 1) {
+	if (type == 2) {
+
+		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Nereita);
+
+		////////////////////////////////////////////////////////////////////////////////
+
+		// now lets animate the sprite we moved
+		walkFrames.reserve(10);
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk0.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk1.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk2.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk3.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk4.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk5.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk6.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk7.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk8.png", Rect(0, 0, 360, 469)));
+		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk9.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.0f);
+		walkAnimate = Animate::create(walkAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		stopFrames.reserve(1);
+		stopFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlStop.png", Rect(0, 0, 360, 469)));
+
+		// create the animation out of the frames
+		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
+		stopAnimate = Animate::create(stopAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpUpFrames.reserve(1);
+		jumpUpFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlJump1.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
+		jumpUpAnimate = Animate::create(jumpUpAnimation);
+
+		/*********************************************************************************/
+
+		// now lets animate the sprite we moved
+		jumpDownFrames.reserve(1);
+		jumpDownFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlJump2.png", Rect(0, 0, 410, 469)));
+
+		// create the animation out of the frames
+		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
+		jumpDownAnimate = Animate::create(jumpDownAnimation);
+
+		////////////////////////////////////////////////////////////////////////////////
+
+		spritePlayer->setScale(0.15f);
+		initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(30 * MPP, 33 * MPP));
+		initFixture(b2Vec2(30 * MPP, 33 * MPP));
+	}
+	else { 
 
 		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Ignatius);
 
@@ -48,7 +107,7 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 		// now lets animate the sprite we moved
 		jumpUpFrames.reserve(1);
-		jumpUpFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando1.png", Rect(0, 0, 410, 469)));
+		jumpUpFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerSaltando1.png", Rect(0, 0, 410, 469)));
 
 		// create the animation out of the frames
 		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
@@ -58,7 +117,7 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 		// now lets animate the sprite we moved
 		jumpDownFrames.reserve(1);
-		jumpDownFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando2.png", Rect(0, 0, 410, 469)));
+		jumpDownFrames.pushBack(SpriteFrame::create("player/PlayerWalk/playerSaltando2.png", Rect(0, 0, 410, 469)));
 
 		// create the animation out of the frames
 		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
@@ -66,71 +125,17 @@ Player::Player(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w) {
 
 
 		////////////////////////////////////////////////////////////////////////////////
-	}
-	else { 
-		spritePlayer = Sprite::createWithSpriteFrameName(Sprite_Nereita);
 
-		////////////////////////////////////////////////////////////////////////////////
-
-		// now lets animate the sprite we moved
-		walkFrames.reserve(10);
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk0.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk1.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk2.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk3.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk4.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk5.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk6.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk7.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk8.png", Rect(0, 0, 360, 469)));
-		walkFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlWalk9.png", Rect(0, 0, 360, 469)));
-
-		// create the animation out of the frames
-		walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.1f);
-		walkAnimate = Animate::create(walkAnimation);
-
-		/*********************************************************************************/
-
-		// now lets animate the sprite we moved
-		stopFrames.reserve(1);
-		stopFrames.pushBack(SpriteFrame::create("player/GirlWalk/girlStop.png", Rect(0, 0, 360, 469)));
-
-		// create the animation out of the frames
-		stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
-		stopAnimate = Animate::create(stopAnimation);
-
-		/*********************************************************************************/
-
-		// now lets animate the sprite we moved
-		jumpUpFrames.reserve(1);
-		jumpUpFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando1.png", Rect(0, 0, 410, 469)));
-
-		// create the animation out of the frames
-		jumpUpAnimation = Animation::createWithSpriteFrames(jumpUpFrames, 0.1f);
-		jumpUpAnimate = Animate::create(jumpUpAnimation);
-
-		/*********************************************************************************/
-
-		// now lets animate the sprite we moved
-		jumpDownFrames.reserve(1);
-		jumpDownFrames.pushBack(SpriteFrame::create("player/PlayerJump/playerSaltando2.png", Rect(0, 0, 410, 469)));
-
-		// create the animation out of the frames
-		jumpDownAnimation = Animation::createWithSpriteFrames(jumpDownFrames, 0.1f);
-		jumpDownAnimate = Animate::create(jumpDownAnimation);
-
-
-		////////////////////////////////////////////////////////////////////////////////
+		spritePlayer->setScale(0.2f);
+		initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(35 * MPP, 42 * MPP));
+		initFixture(b2Vec2(35 * MPP, 42 * MPP));
 	}
 
 	// run it and repeat it forever
 	spritePlayer->runAction(stopAnimate);
 	spritePlayer->setPosition(pos.x, pos.y);
-	initBody(b2Vec2(pos.x * MPP, pos.x * MPP), b2Vec2(35 * MPP, 42 * MPP));
-	initFixture(b2Vec2(35 * MPP, 42 * MPP));
+	
 	m_pBody->SetTransform(b2Vec2(pos.x * MPP, pos.y * MPP), m_pBody->GetAngle());
-
-	spritePlayer->setScale(0.2f);
 
 	jumping = false;
 

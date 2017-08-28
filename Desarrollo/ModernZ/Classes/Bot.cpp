@@ -20,6 +20,56 @@ Bot::Bot(cocos2d::Layer *layer, int type, b2Vec2 pos, b2World* w, std::vector<No
 	velBot = 200;
 
 	t = clock();
+
+	//this->getSprite() = Sprite::createWithSpriteFrameName(Sprite_Zombi1);
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	// now lets animate the sprite we atack
+	atackFrames.reserve(10);
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack1.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack2.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack3.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack4.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack5.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack6.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack7.png", Rect(0, 0, 360, 469)));
+	atackFrames.pushBack(SpriteFrame::create("player/Zombie1/zAtack8.png", Rect(0, 0, 360, 469)));
+
+	// create the animation out of the frames
+	atackAnimation = Animation::createWithSpriteFrames(atackFrames, 0.0f);
+	atackAnimate = Animate::create(atackAnimation);
+
+	/*********************************************************************************/
+
+	// now lets animate the sprite we moved
+	walkFrames.reserve(10);
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk1.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk2.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk3.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk4.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk5.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk6.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk7.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk8.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk9.png", Rect(0, 0, 360, 469)));
+	walkFrames.pushBack(SpriteFrame::create("player/Zombie1/zWalk10.png", Rect(0, 0, 360, 469)));
+
+	// create the animation out of the frames
+	walkAnimation = Animation::createWithSpriteFrames(walkFrames, 0.0f);
+	walkAnimate = Animate::create(walkAnimation);
+
+	/*********************************************************************************/
+
+	// now lets animate the sprite we stop
+	stopFrames.reserve(1);
+	stopFrames.pushBack(SpriteFrame::create("player/Zombie1/zStop.png", Rect(0, 0, 360, 469)));
+
+	// create the animation out of the frames
+	stopAnimation = Animation::createWithSpriteFrames(stopFrames, 0.1f);
+	stopAnimate = Animate::create(stopAnimation);
+
+	////////////////////////////////////////////////////////////////////////////////
 }
 
 void Bot::updatePlayer() {
@@ -44,6 +94,9 @@ void Bot::updatePlayer() {
 }
 
 void Bot::move() {
+
+	if (dirBot == -1) { this->getSprite()->setRotationY(180); }
+	else this->getSprite()->setRotationY(360);
 
 	if (currentNode == NULL) {
 		nextNode();

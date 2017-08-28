@@ -24,17 +24,6 @@ public:
 	void setJumping(bool j);
 	void setAction(int type);
 
-private:
-	cocos2d::Size visibleSize;
-	cocos2d::Vec2 origin;
-	cocos2d::Sprite *spritePlayer;
-	bool jumping;
-	int dir;
-	int typePlayer;
-
-	b2Body* m_pBody;
-	b2World* _world;
-
 	cocos2d::Animate *walkAnimate;
 	cocos2d::Animation *walkAnimation;
 	cocos2d::Vector<cocos2d::SpriteFrame*> walkFrames;
@@ -50,6 +39,17 @@ private:
 	cocos2d::Animate *jumpDownAnimate;
 	cocos2d::Animation *jumpDownAnimation;
 	cocos2d::Vector<cocos2d::SpriteFrame*> jumpDownFrames;
+
+private:
+	cocos2d::Sprite *spritePlayer;
+	cocos2d::Size visibleSize;
+	cocos2d::Vec2 origin;
+	bool jumping;
+	int dir;
+	int typePlayer;
+
+	b2Body* m_pBody;
+	b2World* _world;
 
 };
 
